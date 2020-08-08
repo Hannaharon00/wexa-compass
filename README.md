@@ -4,3 +4,20 @@
 
 Built for the Wexa AI CognoDB take-home assignment.
 
+- **Live demo:** [wexa-career-compass.vercel.app](https://wexa-career-compass.vercel.app) (frontend on Vercel, API on Railway, data on CognoDB Cloud)
+- **Screen recording:** _TODO — add link_
+
+---
+
+## Table of contents
+
+1. [Why a graph database?](#why-a-graph-database)
+2. [Data model](#data-model)
+3. [Screenshots](#screenshots)
+4. [Project structure](#project-structure)
+5. [Setup](#setup)
+6. [Running locally](#running-locally)
+7. [The main queries, explained](#the-main-queries-explained)
+8. [Error handling](#error-handling)
+9. [Deployment](#deployment)
+
