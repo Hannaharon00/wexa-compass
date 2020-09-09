@@ -1,0 +1,16 @@
+"""CognoDB (openCypher over Bolt) connection handling.
+
+CognoDB speaks the same Bolt protocol as Neo4j, so the official `neo4j`
+Python driver is used as-is -- no custom SDK. The driver keeps its own
+internal connection pool, so a single process-wide instance is created
+once and reused for every request.
+"""
+from __future__ import annotations
+
+import logging
+from contextlib import contextmanager
+from typing import Any, Iterator
+
+from neo4j import GraphDatabase, Driver
+from neo4j.exceptions import Neo4jError, ServiceUnavailable, AuthError
+
