@@ -40,3 +40,40 @@ graph LR
 
 **Nodes**
 
+## Screenshots
+
+| | |
+|---|---|
+| **Home — skill picker** | ![Home page with skill picker](docs/screenshots/01-home.png) |
+| **Roles, ranked by match** | ![Roles grid ranked by skill match percentage](docs/screenshots/02-roles.png) |
+| **Learning path for a role** | ![Role detail page with computed learning path](docs/screenshots/03-role-detail.png) |
+| **Course catalog** | ![Searchable, filterable course catalog](docs/screenshots/04-courses.png) |
+| **Course prerequisite chain** | ![Course detail page with prerequisite chain breadcrumb](docs/screenshots/05-course-detail.png) |
+| **Skill graph explorer** | ![Radial skill graph showing multi-hop related skills](docs/screenshots/06-skill-graph.png) |
+
+## Project structure
+
+```
+backend/
+  app/
+    main.py          FastAPI app, CORS, error handling, serves the built frontend
+    config.py         Environment variable loading
+    db.py              CognoDB driver lifecycle + graceful error handling
+    queries.py        Every Cypher statement in the app, with comments on why each is shaped the way it is
+    schemas.py        Pydantic request/response models
+    routers/
+      skills.py, courses.py, roles.py, paths.py
+  seed/
+    seed_data.py       The hand-curated dataset (skills, courses, roles, edges)
+    seed.py             Idempotent loader script (MERGE-based, safe to re-run)
+  requirements.txt
+frontend/
+  src/
+    api/                Typed fetch client + data-fetching hooks
+    components/         Reusable UI (skill picker, cards, loading/empty/error states, skill graph SVG)
+    pages/               One file per route
+    state/               Known-skills selection, persisted to localStorage
+README.md
+.env.example
+```
+
