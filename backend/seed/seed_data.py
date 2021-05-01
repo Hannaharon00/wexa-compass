@@ -1,5 +1,9 @@
 """Realistic seed dataset for Career Compass.
 
+# (skill_id, name, category, description)
+SKILLS = [
+    # Programming Languages
+    ("python", "Python", "Programming Languages", "General-purpose language widely used in backend, data and ML work."),
     ("pandas", "Pandas", "Data & ML", "Python library for tabular data manipulation."),
     ("etl", "ETL Pipelines", "Data & ML", "Extracting, transforming and loading data between systems."),
     ("data_warehousing", "Data Warehousing", "Data & ML", "Designing systems for large-scale analytical storage."),
