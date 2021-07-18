@@ -36,3 +36,12 @@ RETURN related.skill_id AS skill_id, related.name AS name,
 ORDER BY hops, related.name
 """
 
+LIST_ROLES = """
+MATCH (r:Role)
+OPTIONAL MATCH (r)-[req:REQUIRES_SKILL]->(s:Skill)
+RETURN r.role_id AS role_id, r.title AS title, r.industry AS industry,
+       r.seniority AS seniority, r.description AS description,
+       count(DISTINCT s) AS skill_count
+ORDER BY r.title
+"""
+

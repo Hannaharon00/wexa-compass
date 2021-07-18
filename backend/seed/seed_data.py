@@ -1,5 +1,12 @@
 """Realistic seed dataset for Career Compass.
 
+Everything here is hand-curated (no random generation) so the graph
+reads as a plausible slice of a real learning/career catalog: skills
+grouped into categories, courses that teach and require skills and
+chain into each other as prerequisites, and roles that require skills
+at a given importance/level.
+"""
+
 # (skill_id, name, category, description)
 SKILLS = [
     # Programming Languages
