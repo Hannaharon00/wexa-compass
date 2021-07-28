@@ -52,3 +52,13 @@ SKILLS = [
     ("agile_scrum", "Agile & Scrum", "Soft Skills", "Iterative delivery frameworks for product teams."),
     ("technical_writing", "Technical Writing", "Soft Skills", "Writing clear documentation and technical content."),
     ("public_speaking", "Public Speaking", "Soft Skills", "Presenting ideas confidently to an audience."),
+    ("mentoring", "Mentoring & Leadership", "Soft Skills", "Growing the skills of the people around you."),
+    ("stakeholder_management", "Stakeholder Management", "Soft Skills", "Aligning people with competing priorities."),
+    # CS Fundamentals
+    ("data_structures_algorithms", "Data Structures & Algorithms", "CS Fundamentals", "Core building blocks for efficient software."),
+    ("discrete_math", "Discrete Math", "CS Fundamentals", "Mathematical foundations behind computer science."),
+    ("systems_design", "Systems Design", "CS Fundamentals", "Designing software architecture that scales and stays reliable."),
+    ("databases_theory", "Database Theory", "CS Fundamentals", "Relational theory, normalization, transactions and indexing."),
+    ("distributed_systems", "Distributed Systems", "CS Fundamentals", "Designing systems that span multiple machines reliably."),
+]
+
