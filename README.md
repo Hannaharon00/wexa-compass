@@ -77,3 +77,20 @@ README.md
 .env.example
 ```
 
+```bash
+cp .env.example .env
+```
+
+Fill in `.env`:
+
+```
+COGNODB_URI=bolt+s://<instance-id>.databases.cognodb.cloud
+COGNODB_USER=cognodb
+COGNODB_PASSWORD=<your generated password>
+COGNODB_DATABASE=neo4j
+```
+
+This file is git-ignored — connection details are never committed. In production, the same variables are set directly in the hosting platform's dashboard instead of a `.env` file.
+
+### 3. Install dependencies
+
