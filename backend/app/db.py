@@ -14,3 +14,7 @@ from typing import Any, Iterator
 from neo4j import GraphDatabase, Driver
 from neo4j.exceptions import Neo4jError, ServiceUnavailable, AuthError
 
+from .config import settings
+
+logger = logging.getLogger("career_compass.db")
+
