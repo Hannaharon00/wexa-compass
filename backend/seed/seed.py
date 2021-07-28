@@ -15,3 +15,14 @@ from __future__ import annotations
 from dotenv import load_dotenv
 from neo4j import GraphDatabase
 
+URI = os.environ.get("COGNODB_URI", "")
+USER = os.environ.get("COGNODB_USER", "cognodb")
+PASSWORD = os.environ.get("COGNODB_PASSWORD", "")
+DATABASE = os.environ.get("COGNODB_DATABASE", "neo4j")
+
+
+def reset(session) -> None:
+    print("Deleting all existing nodes and relationships...")
+    session.run("MATCH (n) DETACH DELETE n")
+
+
