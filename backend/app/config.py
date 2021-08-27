@@ -14,3 +14,26 @@ except ImportError:
     pass
 
 
+@dataclass(frozen=True)
+class Settings:
+    cognodb_uri: str
+    cognodb_user: str
+    cognodb_password: str
+    cognodb_database: str
+    cors_origins: list
+
+
+def get_settings() -> Settings:
+    return Settings(
+        cognodb_uri=os.environ.get("COGNODB_URI", ""),
+        cognodb_user=os.environ.get("COGNODB_USER", "cognodb"),
+        cognodb_password=os.environ.get("COGNODB_PASSWORD", ""),
+        cognodb_database=os.environ.get("COGNODB_DATABASE", "neo4j"),
+        cors_origins=[
+            o.strip()
+            for o in os.environ.get("CORS_ORIGINS", "http://localhost:5173").split(",")
+            if o.strip()
+        ],
+    )
+
+
