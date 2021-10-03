@@ -18,3 +18,14 @@ from .config import settings
 
 logger = logging.getLogger("career_compass.db")
 
+_driver: Driver | None = None
+
+
+class DatabaseUnavailableError(RuntimeError):
+    """Raised whenever CognoDB cannot be reached or a query fails.
+
+    Kept distinct from generic exceptions so the API layer can turn it
+    into a clean 503 instead of leaking a driver stack trace.
+    """
+
+
