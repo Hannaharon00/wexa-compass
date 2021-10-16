@@ -48,6 +48,24 @@ graph LR
 
 **Nodes**
 
+| Label | Key property | Other properties |
+|---|---|---|
+| `Skill` | `skill_id` | `name`, `category`, `description` |
+| `Course` | `course_id` | `title`, `provider`, `level`, `duration_hours`, `url` |
+| `Role` | `role_id` | `title`, `industry`, `seniority`, `description` |
+
+**Relationships**
+
+| Relationship | Direction | Properties | Meaning |
+|---|---|---|---|
+| `(:Course)-[:TEACHES]->(:Skill)` | Course → Skill | — | This course teaches this skill. |
+| `(:Course)-[:REQUIRES]->(:Skill)` | Course → Skill | — | You should already know this skill before taking the course. |
+| `(:Course)-[:PREREQUISITE_OF]->(:Course)` | Course → Course | — | Complete the first course before the second. |
+| `(:Role)-[:REQUIRES_SKILL]->(:Skill)` | Role → Skill | `importance` (`core`/`nice-to-have`), `min_level` | This role needs this skill, and how much. |
+| `(:Skill)-[:RELATED_TO]-(:Skill)` | Undirected | `strength` (0–1) | These skills are conceptually adjacent (e.g. Statistics ↔ Machine Learning). |
+
+The seed dataset ([`backend/seed/seed_data.py`](backend/seed/seed_data.py)) loads **63 skills** across 9 categories, **50 courses** with realistic prerequisite chains, **16 job roles**, **72** `RELATED_TO` edges and **28** `PREREQUISITE_OF` chains — enough to produce genuinely multi-hop, non-trivial traversals while staying well within the CognoDB free-tier (c0) limits.
+
 ## Screenshots
 
 | | |
