@@ -12,3 +12,15 @@ from .config import settings
 from .db import DatabaseUnavailableError, close_driver, init_driver, run_query
 from .routers import courses, paths, roles, skills
 
+logging.basicConfig(level=logging.INFO)
+
+app = FastAPI(title="Career Compass API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.cors_origins,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
