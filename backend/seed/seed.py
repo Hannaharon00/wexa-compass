@@ -20,6 +20,9 @@ from pathlib import Path
 from dotenv import load_dotenv
 from neo4j import GraphDatabase
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from seed_data import COURSE_PREREQUISITES, COURSES, ROLES, SKILL_RELATIONSHIPS, SKILLS  # noqa: E402
+
 URI = os.environ.get("COGNODB_URI", "")
 USER = os.environ.get("COGNODB_USER", "cognodb")
 PASSWORD = os.environ.get("COGNODB_PASSWORD", "")
