@@ -120,3 +120,14 @@ This file is git-ignored — connection details are never committed. In producti
 
 ### 3. Install dependencies
 
+Safe to re-run — it `MERGE`s rather than duplicating. Pass `--reset` to wipe the database first.
+
+## Running locally
+
+**Two-process dev mode** (hot reload on both sides):
+
+```bash
+# Terminal 1 — backend on :8000
+cd backend && source .venv/bin/activate
+uvicorn app.main:app --reload --port 8000
+
