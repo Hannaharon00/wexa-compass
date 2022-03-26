@@ -11,6 +11,27 @@ at a given importance/level.
 SKILLS = [
     # Programming Languages
     ("python", "Python", "Programming Languages", "General-purpose language widely used in backend, data and ML work."),
+    ("javascript", "JavaScript", "Programming Languages", "The language of the web browser, also used server-side via Node.js."),
+    ("typescript", "TypeScript", "Programming Languages", "A statically typed superset of JavaScript."),
+    ("go", "Go", "Programming Languages", "Compiled language popular for backend services and infrastructure tooling."),
+    ("java", "Java", "Programming Languages", "Long-standing enterprise and Android language."),
+    ("sql", "SQL", "Programming Languages", "Query language for relational databases."),
+    ("rust", "Rust", "Programming Languages", "Systems language focused on memory safety and performance."),
+    ("bash_scripting", "Bash Scripting", "Programming Languages", "Shell scripting for automation on Unix-like systems."),
+    # Web & Frameworks
+    ("react", "React", "Web & Frameworks", "Component-based UI library for building web frontends."),
+    ("nodejs", "Node.js", "Web & Frameworks", "JavaScript runtime for building backend services."),
+    ("fastapi", "FastAPI", "Web & Frameworks", "Modern Python web framework for building APIs."),
+    ("django", "Django", "Web & Frameworks", "Batteries-included Python web framework."),
+    ("express", "Express.js", "Web & Frameworks", "Minimal Node.js web framework for building APIs."),
+    ("nextjs", "Next.js", "Web & Frameworks", "React framework with server rendering and routing built in."),
+    ("vue", "Vue.js", "Web & Frameworks", "Approachable frontend framework."),
+    ("rest_apis", "REST API Design", "Web & Frameworks", "Designing resource-oriented HTTP APIs."),
+    ("graphql", "GraphQL", "Web & Frameworks", "Query language and runtime for client-driven APIs."),
+    # Data & ML
+    ("statistics", "Statistics", "Data & ML", "Probability and inference, the foundation of data analysis."),
+    ("machine_learning", "Machine Learning", "Data & ML", "Building models that learn patterns from data."),
+    ("data_visualization", "Data Visualization", "Data & ML", "Communicating data findings visually."),
     ("pandas", "Pandas", "Data & ML", "Python library for tabular data manipulation."),
     ("etl", "ETL Pipelines", "Data & ML", "Extracting, transforming and loading data between systems."),
     ("data_warehousing", "Data Warehousing", "Data & ML", "Designing systems for large-scale analytical storage."),
