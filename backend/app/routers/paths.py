@@ -21,6 +21,8 @@ from __future__ import annotations
 
 from collections import defaultdict, deque
 
+from fastapi import APIRouter, HTTPException
+
 from .. import queries
 from ..db import run_query
 from ..schemas import LearningPathRequest
