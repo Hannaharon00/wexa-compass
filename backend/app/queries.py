@@ -36,6 +36,16 @@ RETURN related.skill_id AS skill_id, related.name AS name,
 ORDER BY hops, related.name
 """
 
+GET_SKILL = """
+MATCH (s:Skill {skill_id: $skill_id})
+OPTIONAL MATCH (c:Course)-[:TEACHES]->(s)
+OPTIONAL MATCH (r:Role)-[:REQUIRES_SKILL]->(s)
+RETURN s.skill_id AS skill_id, s.name AS name, s.category AS category,
+       s.description AS description,
+       collect(DISTINCT {course_id: c.course_id, title: c.title}) AS taught_by,
+       collect(DISTINCT {role_id: r.role_id, title: r.title}) AS required_by
+"""
+
 LIST_ROLES = """
 MATCH (r:Role)
 OPTIONAL MATCH (r)-[req:REQUIRES_SKILL]->(s:Skill)
