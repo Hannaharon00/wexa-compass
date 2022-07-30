@@ -83,6 +83,18 @@ SKILLS = [
     ("distributed_systems", "Distributed Systems", "CS Fundamentals", "Designing systems that span multiple machines reliably."),
 ]
 
+# (course_id, title, provider, level, duration_hours, url, teaches[], requires[])
+COURSES = [
+    ("python_fundamentals", "Python Fundamentals", "Codecademy", "Beginner", 12, "https://example.com/courses/python-fundamentals", ["python"], []),
+    ("python_intermediate", "Intermediate Python", "Codecademy", "Intermediate", 16, "https://example.com/courses/python-intermediate", ["python", "data_structures_algorithms"], ["python"]),
+    ("python_for_data_analysis", "Python for Data Analysis", "Coursera", "Intermediate", 14, "https://example.com/courses/python-data-analysis", ["pandas", "data_visualization"], ["python"]),
+    ("statistics_for_data_science", "Statistics for Data Science", "edX", "Beginner", 10, "https://example.com/courses/statistics-for-ds", ["statistics"], []),
+    ("intro_machine_learning", "Introduction to Machine Learning", "Coursera", "Intermediate", 20, "https://example.com/courses/intro-ml", ["machine_learning"], ["python", "statistics"]),
+    ("deep_learning_specialization", "Deep Learning Specialization", "Coursera", "Advanced", 30, "https://example.com/courses/deep-learning", ["deep_learning", "nlp"], ["machine_learning"]),
+    ("sql_fundamentals", "SQL Fundamentals", "Codecademy", "Beginner", 8, "https://example.com/courses/sql-fundamentals", ["sql"], []),
+    ("data_modeling_essentials", "Data Modeling Essentials", "Pluralsight", "Intermediate", 10, "https://example.com/courses/data-modeling", ["data_modeling", "databases_theory"], ["sql"]),
+    ("data_warehousing_etl", "Data Warehousing & ETL", "Pluralsight", "Intermediate", 14, "https://example.com/courses/data-warehousing-etl", ["etl", "data_warehousing"], ["sql"]),
+    ("javascript_fundamentals", "JavaScript Fundamentals", "freeCodeCamp", "Beginner", 10, "https://example.com/courses/javascript-fundamentals", ["javascript"], []),
     ("monitoring_and_observability", "Monitoring & Observability", "Internal Academy", "Intermediate", 8, "https://example.com/courses/monitoring", ["monitoring_observability"], ["linux"]),
     ("computer_networking_basics", "Computer Networking Basics", "edX", "Beginner", 10, "https://example.com/courses/networking-basics", ["computer_networking"], []),
     ("application_security_fundamentals", "Application Security Fundamentals", "O'Reilly", "Intermediate", 12, "https://example.com/courses/appsec-fundamentals", ["application_security"], ["rest_apis"]),
