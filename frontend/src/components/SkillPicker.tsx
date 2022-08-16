@@ -26,3 +26,20 @@ export default function SkillPicker({
     return [...byCategory.entries()].sort((a, b) => a[0].localeCompare(b[0]));
   }, [skills, query]);
 
+  return (
+    <div>
+      <div className="relative mb-4">
+        <svg
+          className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <circle cx="11" cy="11" r="7" />
+          <path d="m21 21-4.3-4.3" strokeLinecap="round" />
+        </svg>
+        <input
+          value={query}
