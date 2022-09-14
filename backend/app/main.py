@@ -24,3 +24,24 @@ app.add_middleware(
 )
 
 
+@app.exception_handler(DatabaseUnavailableError)
+async def db_unavailable_handler(request: Request, exc: DatabaseUnavailableError):
+    logging.getLogger("career_compass").error("Database error: %s", exc)
+    return JSONResponse(
+        status_code=503,
+        content={
+            "detail": "The graph database is unreachable right now. Please try again shortly."
+        },
+    )
+
+
+@app.on_event("startup")
+def _startup() -> None:
+    init_driver()
+
+
+@app.on_event("shutdown")
+def _shutdown() -> None:
+    close_driver()
+
+
