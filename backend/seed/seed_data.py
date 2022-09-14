@@ -115,3 +115,21 @@ COURSES = [
     ("mentoring_and_leadership", "Mentoring & Leadership", "Internal Academy", "Intermediate", 8, "https://example.com/courses/mentoring", ["mentoring"], ["communication"]),
     ("market_analysis_for_pms", "Market Analysis for Product Managers", "Reforge", "Intermediate", 8, "https://example.com/courses/market-analysis", ["market_analysis"], ["product_strategy"]),
 ]
+    ("docker_fundamentals", "ci_cd_pipelines"),
+    ("aws_cloud_practitioner", "aws_solutions_architect"),
+    ("aws_cloud_practitioner", "terraform_infrastructure_as_code"),
+    ("application_security_fundamentals", "threat_modeling_workshop"),
+    ("application_security_fundamentals", "identity_access_management_course"),
+    ("ui_design_foundations", "figma_for_product_design"),
+    ("ui_design_foundations", "accessibility_in_design"),
+    ("figma_for_product_design", "design_systems_at_scale"),
+    ("product_strategy_essentials", "market_analysis_for_pms"),
+]
+# express_api_development and fastapi_for_python_devs both teach rest_apis;
+# graphql builds conceptually on REST API design, so it follows whichever
+# REST course a learner path already includes -- modeled as following the
+# Express course specifically to keep the chain concrete.
+COURSE_PREREQUISITES = [
+    p for p in COURSE_PREREQUISITES if p[0] != "rest_apis_placeholder"
+] + [("express_api_development", "graphql_api_design")]
+
