@@ -27,3 +27,6 @@ from .. import queries
 from ..db import run_query
 from ..schemas import LearningPathRequest
 
+router = APIRouter(prefix="/api", tags=["learning-path"])
+
+
