@@ -30,3 +30,17 @@ from ..schemas import LearningPathRequest
 router = APIRouter(prefix="/api", tags=["learning-path"])
 
 
+def _topological_order(course_ids: set, edges: list[dict], meta: dict) -> list[str]:
+    """Kahn's algorithm, ties broken by (duration_hours, title) so the
+    result is stable and readable rather than arbitrary."""
+    indegree = {cid: 0 for cid in course_ids}
+    adjacency = defaultdict(list)
+    for e in edges:
+        if e["from_course"] in course_ids and e["to_course"] in course_ids:
+            adjacency[e["from_course"]].append(e["to_course"])
+            indegree[e["to_course"]] += 1
+
+    def sort_key(cid):
+        m = meta.get(cid, {})
+        return (m.get("duration_hours") or 0, m.get("title") or cid)
+
