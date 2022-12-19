@@ -15,3 +15,9 @@ const PALETTE: Record<string, { bg: string; text: string; border: string; dot: s
 
 const FALLBACK = { bg: "bg-slate-50", text: "text-slate-700", border: "border-slate-200", dot: "bg-slate-400", fill: "fill-slate-400" };
 
+export function categoryStyle(category: string | null | undefined) {
+  if (!category) return FALLBACK;
+  return PALETTE[category] ?? FALLBACK;
+}
+
+export const ALL_CATEGORIES = Object.keys(PALETTE);
