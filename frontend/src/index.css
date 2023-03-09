@@ -14,3 +14,20 @@ body {
   margin: 0;
 }
 
+::selection {
+  @apply bg-indigo-200 text-indigo-950;
+}
+
+/* Small, deliberate custom scrollbar so the skill-picker chip list
+   doesn't feel like default-browser chrome. */
+.thin-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.thin-scroll::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full;
+}
+.thin-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
