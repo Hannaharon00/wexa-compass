@@ -120,6 +120,24 @@ This file is git-ignored — connection details are never committed. In producti
 
 ### 3. Install dependencies
 
+```bash
+# Backend
+cd backend
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+
+# Frontend
+cd ../frontend
+npm install
+```
+
+### 4. Seed the database
+
+```bash
+cd backend
+python seed/seed.py
+```
+
 Safe to re-run — it `MERGE`s rather than duplicating. Pass `--reset` to wipe the database first.
 
 ## Running locally
