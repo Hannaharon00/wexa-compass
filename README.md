@@ -103,6 +103,16 @@ README.md
 .env.example
 ```
 
+## Setup
+
+### 1. Create your CognoDB instance
+
+1. Sign up at [console.cognodb.com/signup](https://console.cognodb.com/signup) (no credit card needed for the free tier).
+2. Create a free **c0** instance and pick a region. It provisions in under a minute.
+3. Copy the connection URI (`bolt+s://<instance-id>.databases.cognodb.cloud`) and the generated password for the `cognodb` user — **the password is shown exactly once.**
+
+### 2. Configure environment variables
+
 ```bash
 cp .env.example .env
 ```
