@@ -159,3 +159,20 @@ Safe to re-run — it `MERGE`s rather than duplicating. Pass `--reset` to wipe t
 cd backend && source .venv/bin/activate
 uvicorn app.main:app --reload --port 8000
 
+# Terminal 2 — frontend on :5173, proxies /api to :8000 (see vite.config.ts)
+cd frontend
+npm run dev
+```
+
+Visit `http://localhost:5173`.
+
+**Single-process mode** (what production actually runs — good for a final check before deploying):
+
+```bash
+cd frontend && npm run build && cd ../backend
+source .venv/bin/activate
+uvicorn app.main:app --port 8000
+```
+
+Visit `http://localhost:8000` — FastAPI serves the built frontend directly alongside the `/api/*` routes.
+
