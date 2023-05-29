@@ -43,3 +43,39 @@ export default function SkillPicker({
         </svg>
         <input
           value={query}
+      <div className="thin-scroll max-h-[26rem] space-y-5 overflow-y-auto pr-1">
+        {grouped.length === 0 && <p className="py-8 text-center text-sm text-slate-400">No skills match “{query}”.</p>}
+        {grouped.map(([category, items]) => {
+          const style = categoryStyle(category);
+          return (
+            <div key={category}>
+              <div className="mb-2 flex items-center gap-2">
+                <span className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
+                <h4 className="text-xs font-semibold uppercase tracking-wide text-slate-500">{category}</h4>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {items.map((skill) => {
+                  const active = selectedSet.has(skill.skill_id);
+                  return (
+                    <button
+                      key={skill.skill_id}
+                      onClick={() => onToggle(skill.skill_id)}
+                      title={skill.description ?? undefined}
+                      className={`rounded-full border px-3 py-1.5 text-sm font-medium transition ${
+                        active
+                          ? "border-indigo-600 bg-indigo-600 text-white shadow-sm"
+                          : `${style.border} ${style.bg} ${style.text} hover:brightness-95`
+                      }`}
+                    >
+                      {skill.name}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
