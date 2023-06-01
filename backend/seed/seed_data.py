@@ -115,6 +115,27 @@ COURSES = [
     ("mentoring_and_leadership", "Mentoring & Leadership", "Internal Academy", "Intermediate", 8, "https://example.com/courses/mentoring", ["mentoring"], ["communication"]),
     ("market_analysis_for_pms", "Market Analysis for Product Managers", "Reforge", "Intermediate", 8, "https://example.com/courses/market-analysis", ["market_analysis"], ["product_strategy"]),
 ]
+# (before_course_id, after_course_id) -- before must be completed first
+COURSE_PREREQUISITES = [
+    ("python_fundamentals", "python_intermediate"),
+    ("python_intermediate", "python_for_data_analysis"),
+    ("python_intermediate", "fastapi_for_python_devs"),
+    ("python_intermediate", "systems_design_for_engineers"),
+    ("python_for_data_analysis", "intro_machine_learning"),
+    ("statistics_for_data_science", "intro_machine_learning"),
+    ("intro_machine_learning", "deep_learning_specialization"),
+    ("sql_fundamentals", "data_modeling_essentials"),
+    ("data_modeling_essentials", "data_warehousing_etl"),
+    ("javascript_fundamentals", "typescript_for_js_devs"),
+    ("javascript_fundamentals", "react_essentials"),
+    ("javascript_fundamentals", "nodejs_backend"),
+    ("react_essentials", "advanced_react_patterns"),
+    ("react_essentials", "nextjs_fullstack"),
+    ("nodejs_backend", "express_api_development"),
+    ("rest_apis_placeholder", "graphql_api_design"),  # replaced below
+    ("discrete_math_for_cs", "data_structures_deep_dive"),
+    ("linux_command_line", "docker_fundamentals"),
+    ("docker_fundamentals", "kubernetes_in_production"),
     ("docker_fundamentals", "ci_cd_pipelines"),
     ("aws_cloud_practitioner", "aws_solutions_architect"),
     ("aws_cloud_practitioner", "terraform_infrastructure_as_code"),
