@@ -176,3 +176,15 @@ uvicorn app.main:app --port 8000
 
 Visit `http://localhost:8000` — FastAPI serves the built frontend directly alongside the `/api/*` routes.
 
+If CognoDB is unreachable — wrong credentials, instance paused, network issue — the backend never crashes or leaks a driver stack trace. `db.py` wraps every query and raises a typed `DatabaseUnavailableError`, which a FastAPI exception handler in `main.py` turns into a clean `503` with a human-readable message. The frontend's `ErrorState` component renders that message with a retry button on every page. Try it: stop your CognoDB instance (or clear `COGNODB_PASSWORD` in `.env`) and reload the app.
+
+## Deployment
+
+The live demo runs as two separately hosted services, both free tier:
+
+- **Backend (Railway)** — deployed from the `backend/` directory (set as the service's root directory). Railway's builder (Railpack) detects Python from `requirements.txt` and reads `backend/Procfile` for the start command:
+  ```
+  web: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+  ```
+  Environment variables (`COGNODB_URI`, `COGNODB_USER`, `COGNODB_PASSWORD`, `COGNODB_DATABASE`, `CORS_ORIGINS`) are set directly in Railway's dashboard — the same names as `.env`, just entered through the platform's UI instead of a file.
+
