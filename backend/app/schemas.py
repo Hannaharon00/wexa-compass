@@ -31,3 +31,10 @@ class Role(BaseModel):
     skill_count: Optional[int] = None
 
 
+class RecommendRolesRequest(BaseModel):
+    known_skill_ids: list[str] = Field(default_factory=list)
+
+
+class LearningPathRequest(BaseModel):
+    known_skill_ids: list[str] = Field(default_factory=list)
+    target_role_id: str
