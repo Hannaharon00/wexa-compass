@@ -7,3 +7,7 @@ interface QueryState<T> {
   error: string | null;
 }
 
+/** Fires a POST request on demand via `mutate(body)`, tracking loading/error. */
+export function useApiMutation<TBody, TResult>(path: string) {
+  const [state, setState] = useState<QueryState<TResult>>({ data: null, loading: false, error: null });
+
