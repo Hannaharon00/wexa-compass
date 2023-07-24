@@ -44,3 +44,20 @@ def _topological_order(course_ids: set, edges: list[dict], meta: dict) -> list[s
         m = meta.get(cid, {})
         return (m.get("duration_hours") or 0, m.get("title") or cid)
 
+    ready = deque(sorted((c for c in course_ids if indegree[c] == 0), key=sort_key))
+    ordered = []
+    while ready:
+        current = ready.popleft()
+        ordered.append(current)
+        for nxt in sorted(adjacency[current], key=sort_key):
+            indegree[nxt] -= 1
+            if indegree[nxt] == 0:
+                ready.append(nxt)
+        ready = deque(sorted(ready, key=sort_key))
+    # Any course left with indegree > 0 sits on a cycle in the seed data;
+    # append it at the end rather than dropping it silently.
+    remaining = [c for c in course_ids if c not in ordered]
+    ordered.extend(sorted(remaining, key=sort_key))
+    return ordered
+
+
