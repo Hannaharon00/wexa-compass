@@ -46,6 +46,19 @@ RETURN s.skill_id AS skill_id, s.name AS name, s.category AS category,
        collect(DISTINCT {role_id: r.role_id, title: r.title}) AS required_by
 """
 
+# ---------------------------------------------------------------------------
+# Courses
+# ---------------------------------------------------------------------------
+
+LIST_COURSES = """
+MATCH (c:Course)
+OPTIONAL MATCH (c)-[:TEACHES]->(s:Skill)
+RETURN c.course_id AS course_id, c.title AS title, c.provider AS provider,
+       c.level AS level, c.duration_hours AS duration_hours, c.url AS url,
+       collect(DISTINCT s.name) AS teaches
+ORDER BY c.title
+"""
+
 GET_COURSE = """
 MATCH (c:Course {course_id: $course_id})
 OPTIONAL MATCH (c)-[:TEACHES]->(taught:Skill)
