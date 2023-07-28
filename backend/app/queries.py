@@ -56,6 +56,32 @@ RETURN c.course_id AS course_id, c.title AS title, c.provider AS provider,
        collect(DISTINCT {skill_id: required.skill_id, name: required.name}) AS requires_skills
 """
 
+# Variable-length traversal up the prerequisite chain -- the kind of
+# query a relational database would need a recursive CTE for, and even
+# then couldn't return "all valid orderings" cheaply. Here it's a single
+# pattern match with an unbounded hop range.
+COURSE_PREREQUISITE_CHAIN = """
+MATCH (target:Course {course_id: $course_id})
+OPTIONAL MATCH path = (start:Course)-[:PREREQUISITE_OF*1..6]->(target)
+WHERE NOT (start)<-[:PREREQUISITE_OF]-()
+// NB: on CognoDB, a WHERE pattern-predicate only evaluates correctly
+// when the already-bound variable is the *first* node in the pattern
+// (as it is here). Written the other way round -- an anonymous node
+// first, the bound variable second -- it silently returns wrong
+// results instead of erroring. Verified directly against a live
+// instance; every pattern-predicate in this file uses the safe form.
+WITH target, path
+WHERE path IS NOT NULL
+UNWIND nodes(path) AS step
+RETURN DISTINCT step.course_id AS course_id, step.title AS title,
+       step.level AS level, length(path) AS chain_length
+ORDER BY chain_length
+"""
+
+# ---------------------------------------------------------------------------
+# Roles
+# ---------------------------------------------------------------------------
+
 LIST_ROLES = """
 MATCH (r:Role)
 OPTIONAL MATCH (r)-[req:REQUIRES_SKILL]->(s:Skill)

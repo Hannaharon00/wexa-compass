@@ -9,6 +9,15 @@ const NAV = [
   { to: "/skills", label: "Skill Graph" },
 ];
 
+function CompassMark() {
+  return (
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="9.25" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M15.2 8.8 13 13l-4.2 2.2L11 11l4.2-2.2Z" fill="currentColor" />
+    </svg>
+  );
+}
+
 export default function Layout({ children }: { children: ReactNode }) {
   const { knownSkillIds } = useKnownSkillsContext();
 
