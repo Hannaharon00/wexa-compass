@@ -43,6 +43,12 @@ export default function SkillPicker({
         </svg>
         <input
           value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search skills…"
+          className="w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-10 pr-4 text-sm shadow-sm outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+        />
+      </div>
+
       <div className="thin-scroll max-h-[26rem] space-y-5 overflow-y-auto pr-1">
         {grouped.length === 0 && <p className="py-8 text-center text-sm text-slate-400">No skills match “{query}”.</p>}
         {grouped.map(([category, items]) => {
