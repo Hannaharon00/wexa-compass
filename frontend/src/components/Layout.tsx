@@ -32,3 +32,14 @@ export default function Layout({ children }: { children: ReactNode }) {
             <span className="font-display text-lg font-semibold tracking-tight">Career Compass</span>
           </NavLink>
 
+      <main className="mx-auto max-w-6xl px-6 py-10">{children}</main>
+
+      <footer className="mx-auto max-w-6xl px-6 py-10 text-xs text-slate-400">
+        <p>
+          Career Compass is a demo application built for the Wexa AI CognoDB take-home assignment. Data model, seed
+          data and every query are documented in the project README.
+        </p>
+      </footer>
+    </div>
+  );
+}
