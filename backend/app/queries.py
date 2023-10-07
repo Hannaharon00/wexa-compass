@@ -104,3 +104,24 @@ RETURN r.role_id AS role_id, r.title AS title, r.industry AS industry,
 ORDER BY r.title
 """
 
+# Step 1: which of the role's required skills are missing, and for each
+# missing skill, which courses teach it and what *other* skills does
+# that course itself require first (its own prerequisites, which may or
+# may not already be known). This single query touches four relationship
+# types across a variable number of hops depending on the data -- exactly
+# the shape of query that turns into a wall of JOINs and recursive CTEs
+# in a relational schema.
+LEARNING_PATH_CANDIDATES = """
+MATCH (r:Role {role_id: $role_id})-[:REQUIRES_SKILL]->(gap:Skill)
+WHERE NOT gap.skill_id IN $known_skill_ids
+MATCH (c:Course)-[:TEACHES]->(gap)
+OPTIONAL MATCH (c)-[:REQUIRES]->(unmet:Skill)
+WHERE NOT unmet.skill_id IN $known_skill_ids
+OPTIONAL MATCH (prereq:Course)-[:PREREQUISITE_OF]->(c)
+RETURN gap.skill_id AS gap_skill_id, gap.name AS gap_skill_name,
+       c.course_id AS course_id, c.title AS title, c.provider AS provider,
+       c.level AS level, c.duration_hours AS duration_hours, c.url AS url,
+       [x IN collect(DISTINCT {skill_id: unmet.skill_id, name: unmet.name}) WHERE x.skill_id IS NOT NULL] AS unmet_prerequisite_skills,
+       [x IN collect(DISTINCT {course_id: prereq.course_id, title: prereq.title}) WHERE x.course_id IS NOT NULL] AS prerequisite_courses
+"""
+
