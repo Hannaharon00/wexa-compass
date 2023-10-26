@@ -61,3 +61,52 @@ def _topological_order(course_ids: set, edges: list[dict], meta: dict) -> list[s
     return ordered
 
 
+    uncovered_skills = []
+    gap_name_by_id = {s["skill_id"]: s["name"] for s in required_skills}
+    for gap_id in uncovered_gap_ids:
+        bridge_rows = run_query(
+            queries.SHORTEST_SKILL_BRIDGE,
+            {"known_skill_ids": list(known), "gap_skill_id": gap_id},
+        )
+        uncovered_skills.append(
+            {
+                "skill_id": gap_id,
+                "name": gap_name_by_id.get(gap_id, gap_id),
+                "closest_known_bridge": bridge_rows[0] if bridge_rows else None,
+            }
+        )
+
+    core_course_ids = {v["row"]["course_id"] for v in best_by_gap.values()}
+    skills_covered_by_course = defaultdict(list)
+    for gap_id, v in best_by_gap.items():
+        skills_covered_by_course[v["row"]["course_id"]].append(gap_name_by_id.get(gap_id, gap_id))
+
+    # A core course may itself assume skills the learner doesn't have yet
+    # (its REQUIRES edges minus what they already know). Only pull a
+    # prerequisite course into the plan when it actually teaches one of
+    # those still-missing skills -- otherwise a course the learner has
+    # already effectively satisfied (e.g. they said they already know
+    # Python) would still drag in its whole authored prerequisite chain
+    # regardless of what they told us they know.
+    unmet_skill_ids_by_course = {
+        v["row"]["course_id"]: {s["skill_id"] for s in v["row"]["unmet_prerequisite_skills"]}
+        for v in best_by_gap.values()
+    }
+
+    all_course_ids = set(core_course_ids)
+    for cid in core_course_ids:
+        unmet_ids = unmet_skill_ids_by_course.get(cid, set())
+        if not unmet_ids:
+            continue
+        chain_rows = run_query(queries.COURSE_PREREQUISITE_CHAIN, {"course_id": cid})
+        chain_ids = [r["course_id"] for r in chain_rows if r["course_id"] not in all_course_ids]
+        if not chain_ids:
+            continue
+        teaches_rows = run_query(queries.COURSES_TEACHES_BY_IDS, {"course_ids": chain_ids})
+        for row in teaches_rows:
+            if unmet_ids.intersection(row["teaches_skill_ids"]):
+                all_course_ids.add(row["course_id"])
+
+    meta_rows = run_query(queries.COURSES_BY_IDS, {"course_ids": list(all_course_ids)})
+    meta = {r["course_id"]: r for r in meta_rows}
+
