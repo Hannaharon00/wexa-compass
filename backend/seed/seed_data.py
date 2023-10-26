@@ -154,3 +154,7 @@ COURSE_PREREQUISITES = [
     p for p in COURSE_PREREQUISITES if p[0] != "rest_apis_placeholder"
 ] + [("express_api_development", "graphql_api_design")]
 
+# (role_id, title, industry, seniority, description, requirements[])
+# each requirement: (skill_id, importance["core"|"nice-to-have"], min_level)
+ROLES = [
+    ("frontend_engineer", "Frontend Engineer", "Software", "Mid", "Builds user-facing web interfaces and owns their quality.", [
