@@ -45,3 +45,20 @@ def _shutdown() -> None:
     close_driver()
 
 
+@app.get("/api/health")
+def health():
+    try:
+        run_query("RETURN 1 AS ok")
+        return {"status": "ok", "database": "connected"}
+    except DatabaseUnavailableError:
+        return JSONResponse(
+            status_code=503,
+            content={"status": "degraded", "database": "unreachable"},
+        )
+
+
+app.include_router(skills.router)
+app.include_router(courses.router)
+app.include_router(roles.router)
+app.include_router(paths.router)
+
