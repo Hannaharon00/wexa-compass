@@ -34,3 +34,67 @@ def reset(session) -> None:
     session.run("MATCH (n) DETACH DELETE n")
 
 
+def load_courses(session) -> None:
+    rows = [
+        {
+            "course_id": cid, "title": title, "provider": provider, "level": level,
+            "duration_hours": duration, "url": url,
+        }
+        for cid, title, provider, level, duration, url, _teaches, _requires in COURSES
+    ]
+    session.run(
+        """
+        UNWIND $rows AS row
+        MERGE (c:Course {course_id: row.course_id})
+        SET c.title = row.title, c.provider = row.provider, c.level = row.level,
+            c.duration_hours = row.duration_hours, c.url = row.url
+        """,
+        rows=rows,
+    )
+    print(f"Loaded {len(rows)} Course nodes.")
+
+    teaches_rows = [
+        {"course_id": cid, "skill_id": skill_id}
+        for cid, *_rest, teaches, _requires in COURSES
+        for skill_id in teaches
+    ]
+    session.run(
+        """
+        UNWIND $rows AS row
+        MATCH (c:Course {course_id: row.course_id})
+        MATCH (s:Skill {skill_id: row.skill_id})
+        MERGE (c)-[:TEACHES]->(s)
+        """,
+        rows=teaches_rows,
+    )
+    print(f"Loaded {len(teaches_rows)} TEACHES relationships.")
+
+    requires_rows = [
+        {"course_id": cid, "skill_id": skill_id}
+        for cid, *_rest, _teaches, requires in COURSES
+        for skill_id in requires
+    ]
+    session.run(
+        """
+        UNWIND $rows AS row
+        MATCH (c:Course {course_id: row.course_id})
+        MATCH (s:Skill {skill_id: row.skill_id})
+        MERGE (c)-[:REQUIRES]->(s)
+        """,
+        rows=requires_rows,
+    )
+    print(f"Loaded {len(requires_rows)} REQUIRES relationships.")
+
+    prereq_rows = [{"before": before, "after": after} for before, after in COURSE_PREREQUISITES]
+    session.run(
+        """
+        UNWIND $rows AS row
+        MATCH (before:Course {course_id: row.before})
+        MATCH (after:Course {course_id: row.after})
+        MERGE (before)-[:PREREQUISITE_OF]->(after)
+        """,
+        rows=prereq_rows,
+    )
+    print(f"Loaded {len(prereq_rows)} PREREQUISITE_OF relationships.")
+
+
