@@ -15,6 +15,12 @@ interface Positioned extends SkillNeighbor {
   y: number;
 }
 
+/** Rough glyph-width estimate for Inter at a given font size -- good
+ * enough to size a background pill without a canvas measurement pass. */
+function estimateTextWidth(text: string, fontSize: number) {
+  return text.length * fontSize * 0.58;
+}
+
 function Label({
   text,
   y,
