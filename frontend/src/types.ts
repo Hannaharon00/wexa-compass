@@ -13,3 +13,20 @@ export interface SkillNeighbor {
   courses: { course_id: string; title: string }[];
 }
 
+export interface Course {
+  course_id: string;
+  title: string;
+  provider: string | null;
+  level: string | null;
+  duration_hours: number | null;
+  url: string | null;
+  teaches: string[];
+}
+
+export interface CoursePrerequisite {
+  course_id: string;
+  title: string;
+  level: string | null;
+  chain_length: number;
+}
+
