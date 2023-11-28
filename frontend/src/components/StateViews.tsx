@@ -55,3 +55,24 @@ export function EmptyState({
   );
 }
 
+export function ErrorState({ message, onRetry }: { message: string; onRetry?: () => void }) {
+  return (
+    <div className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-red-100 bg-red-50 px-6 py-14 text-center">
+      <div className="flex h-11 w-11 items-center justify-center rounded-full bg-red-100 text-red-500">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+          <path d="M12 9v4M12 16.5h.01" strokeLinecap="round" />
+          <circle cx="12" cy="12" r="9" />
+        </svg>
+      </div>
+      <p className="max-w-sm text-sm font-medium text-red-700">{message}</p>
+      {onRetry && (
+        <button
+          onClick={onRetry}
+          className="rounded-full bg-red-600 px-4 py-1.5 text-xs font-semibold text-white transition hover:bg-red-700"
+        >
+          Try again
+        </button>
+      )}
+    </div>
+  );
+}
