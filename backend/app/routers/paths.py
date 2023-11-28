@@ -61,6 +61,39 @@ def _topological_order(course_ids: set, edges: list[dict], meta: dict) -> list[s
     return ordered
 
 
+@router.post("/learning-path")
+def learning_path(body: LearningPathRequest):
+    role_rows = run_query(queries.GET_ROLE, {"role_id": body.target_role_id})
+    if not role_rows or role_rows[0]["title"] is None:
+        raise HTTPException(status_code=404, detail="Role not found")
+    role = role_rows[0]
+    required_skills = [s for s in role["required_skills"] if s.get("skill_id")]
+    known = set(body.known_skill_ids)
+    missing_skill_ids = {s["skill_id"] for s in required_skills} - known
+
+    if not missing_skill_ids:
+        return {
+            "role": {"role_id": role["role_id"], "title": role["title"]},
+            "already_qualified": True,
+            "courses": [],
+            "uncovered_skills": [],
+        }
+
+    candidates = run_query(
+        queries.LEARNING_PATH_CANDIDATES,
+        {"role_id": body.target_role_id, "known_skill_ids": list(known)},
+    )
+
+    best_by_gap: dict = {}
+    for row in candidates:
+        gap = row["gap_skill_id"]
+        score = (len(row["unmet_prerequisite_skills"]), row["duration_hours"] or 0)
+        if gap not in best_by_gap or score < best_by_gap[gap]["score"]:
+            best_by_gap[gap] = {"score": score, "row": row}
+
+    covered_gap_ids = set(best_by_gap.keys())
+    uncovered_gap_ids = missing_skill_ids - covered_gap_ids
+
     uncovered_skills = []
     gap_name_by_id = {s["skill_id"]: s["name"] for s in required_skills}
     for gap_id in uncovered_gap_ids:
