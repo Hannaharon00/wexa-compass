@@ -104,6 +104,17 @@ RETURN r.role_id AS role_id, r.title AS title, r.industry AS industry,
 ORDER BY r.title
 """
 
+GET_ROLE = """
+MATCH (r:Role {role_id: $role_id})
+OPTIONAL MATCH (r)-[req:REQUIRES_SKILL]->(s:Skill)
+RETURN r.role_id AS role_id, r.title AS title, r.industry AS industry,
+       r.seniority AS seniority, r.description AS description,
+       collect(DISTINCT {
+           skill_id: s.skill_id, name: s.name, category: s.category,
+           importance: req.importance, min_level: req.min_level
+       }) AS required_skills
+"""
+
 # Step 1: which of the role's required skills are missing, and for each
 # missing skill, which courses teach it and what *other* skills does
 # that course itself require first (its own prerequisites, which may or
