@@ -136,3 +136,19 @@ RETURN gap.skill_id AS gap_skill_id, gap.name AS gap_skill_name,
        [x IN collect(DISTINCT {course_id: prereq.course_id, title: prereq.title}) WHERE x.course_id IS NOT NULL] AS prerequisite_courses
 """
 
+# For a gap skill with no course that teaches it directly reachable from
+# what the learner already knows, find the shortest conceptual bridge
+# through the skill-adjacency graph -- a pure shortest-path query with
+# no fixed hop count, which relational modelling of the same edge list
+# cannot express without either a fixed-depth chain of joins or a
+# recursive CTE plus manual cycle handling.
+SHORTEST_SKILL_BRIDGE = """
+MATCH (known:Skill), (gap:Skill {skill_id: $gap_skill_id})
+WHERE known.skill_id IN $known_skill_ids
+MATCH path = shortestPath((known)-[:RELATED_TO*..5]-(gap))
+RETURN [n IN nodes(path) | {skill_id: n.skill_id, name: n.name}] AS bridge,
+       length(path) AS hops
+ORDER BY hops ASC
+LIMIT 1
+"""
+
