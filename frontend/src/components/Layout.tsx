@@ -32,6 +32,49 @@ export default function Layout({ children }: { children: ReactNode }) {
             <span className="font-display text-lg font-semibold tracking-tight">Career Compass</span>
           </NavLink>
 
+          <nav className="hidden items-center gap-1 sm:flex">
+            {NAV.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.end}
+                className={({ isActive }) =>
+                  `rounded-full px-3.5 py-1.5 text-sm font-medium transition ${
+                    isActive ? "bg-indigo-600 text-white shadow-sm" : "text-slate-600 hover:bg-slate-200/70 hover:text-slate-900"
+                  }`
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+
+          <NavLink
+            to="/skills"
+            className="flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 shadow-sm transition hover:border-indigo-200 hover:text-indigo-700"
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
+            {knownSkillIds.length} skill{knownSkillIds.length === 1 ? "" : "s"} selected
+          </NavLink>
+        </div>
+        <nav className="flex items-center gap-1 overflow-x-auto px-6 pb-3 sm:hidden">
+          {NAV.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.end}
+              className={({ isActive }) =>
+                `whitespace-nowrap rounded-full px-3 py-1 text-sm font-medium transition ${
+                  isActive ? "bg-indigo-600 text-white" : "text-slate-600"
+                }`
+              }
+            >
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
+      </header>
+
       <main className="mx-auto max-w-6xl px-6 py-10">{children}</main>
 
       <footer className="mx-auto max-w-6xl px-6 py-10 text-xs text-slate-400">

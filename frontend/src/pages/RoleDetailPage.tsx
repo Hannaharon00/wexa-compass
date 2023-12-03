@@ -12,3 +12,14 @@ const LEVEL_STYLE: Record<string, string> = {
   Advanced: "bg-rose-50 text-rose-700 border-rose-200",
 };
 
+export default function RoleDetailPage() {
+  const { roleId } = useParams<{ roleId: string }>();
+  const { data: role, loading, error, refetch } = useApiQuery<RoleDetail>(roleId ? `/roles/${roleId}` : null, [roleId]);
+  const { knownSkillIds } = useKnownSkillsContext();
+  const {
+    data: path,
+    loading: pathLoading,
+    error: pathError,
+    mutate: computePath,
+  } = useApiMutation<{ known_skill_ids: string[]; target_role_id: string }, LearningPathResult>("/learning-path");
+
