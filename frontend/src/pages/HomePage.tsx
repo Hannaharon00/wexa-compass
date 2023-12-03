@@ -54,3 +54,10 @@ export default function HomePage() {
           )}
         </div>
 
+        {loading && <LoadingState label="Loading skills…" />}
+        {error && <ErrorState message={error} onRetry={refetch} />}
+        {skills && <SkillPicker skills={skills} selected={knownSkillIds} onToggle={toggle} />}
+      </section>
+    </div>
+  );
+}
