@@ -4,6 +4,8 @@ import type { Course } from "../types";
 import CourseCard from "../components/CourseCard";
 import { EmptyState, ErrorState, SkeletonCard } from "../components/StateViews";
 
+const LEVELS = ["Beginner", "Intermediate", "Advanced"];
+
 export default function CoursesPage() {
   const { data: courses, loading, error, refetch } = useApiQuery<Course[]>("/courses");
   const [query, setQuery] = useState("");

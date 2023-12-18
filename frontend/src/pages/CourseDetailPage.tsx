@@ -13,3 +13,13 @@ const LEVEL_STYLE: Record<string, string> = {
   Advanced: "bg-rose-50 text-rose-700 border-rose-200",
 };
 
+  if (loading) return <LoadingState label="Loading course…" />;
+  if (error) return <ErrorState message={error} onRetry={refetch} />;
+  if (!course) return null;
+
+  return (
+    <div className="animate-fade-in">
+      <Link to="/courses" className="mb-4 inline-flex items-center gap-1 text-sm text-slate-500 hover:text-indigo-600">
+        ← All courses
+      </Link>
+
