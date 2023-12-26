@@ -62,3 +62,25 @@ function Label({
   );
 }
 
+  const positioned = useMemo<Positioned[]>(() => {
+    const byHop = new Map<number, SkillNeighbor[]>();
+    for (const n of neighbors) {
+      const hop = Math.min(n.hops, 3);
+      if (!byHop.has(hop)) byHop.set(hop, []);
+      byHop.get(hop)!.push(n);
+    }
+    const result: Positioned[] = [];
+    for (const [hop, items] of byHop) {
+      const radius = RADIUS_BY_HOP[hop] ?? 250;
+      items.forEach((item, i) => {
+        const angle = (2 * Math.PI * i) / items.length - Math.PI / 2;
+        result.push({
+          ...item,
+          x: CENTER + radius * Math.cos(angle),
+          y: CENTER + radius * Math.sin(angle),
+        });
+      });
+    }
+    return result;
+  }, [neighbors]);
+
