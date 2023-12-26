@@ -21,3 +21,36 @@ export default function CoursesPage() {
     });
   }, [courses, query, level]);
 
+  return (
+    <div className="animate-fade-in">
+      <div className="mb-6">
+        <h1 className="font-display text-3xl font-semibold text-slate-900">Courses</h1>
+        <p className="mt-1 text-sm text-slate-500">The full catalog behind every learning path in Career Compass.</p>
+      </div>
+
+      <div className="mb-6 flex flex-wrap items-center gap-3">
+        <input
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search by title or skill…"
+          className="w-64 max-w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm shadow-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+        />
+        <div className="flex gap-1.5">
+          <button
+            onClick={() => setLevel(null)}
+            className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${level === null ? "bg-indigo-600 text-white" : "bg-white text-slate-500 border border-slate-200"}`}
+          >
+            All levels
+          </button>
+          {LEVELS.map((l) => (
+            <button
+              key={l}
+              onClick={() => setLevel(l)}
+              className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${level === l ? "bg-indigo-600 text-white" : "bg-white text-slate-500 border border-slate-200"}`}
+            >
+              {l}
+            </button>
+          ))}
+        </div>
+      </div>
+
