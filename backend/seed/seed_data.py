@@ -179,3 +179,23 @@ COURSE_PREREQUISITES = [
 # each requirement: (skill_id, importance["core"|"nice-to-have"], min_level)
 ROLES = [
     ("frontend_engineer", "Frontend Engineer", "Software", "Mid", "Builds user-facing web interfaces and owns their quality.", [
+        ("machine_learning", "core", "intermediate"), ("pandas", "core", "intermediate"),
+        ("data_visualization", "nice-to-have", "intermediate"), ("sql", "nice-to-have", "beginner"),
+    ]),
+    ("ml_engineer", "Machine Learning Engineer", "Data", "Senior", "Ships ML models as reliable production systems.", [
+        ("python", "core", "advanced"), ("machine_learning", "core", "advanced"),
+        ("deep_learning", "core", "intermediate"), ("systems_design", "core", "intermediate"),
+        ("docker", "nice-to-have", "intermediate"), ("aws", "nice-to-have", "beginner"),
+    ]),
+    ("data_engineer", "Data Engineer", "Data", "Mid", "Builds the pipelines and warehouses other data roles depend on.", [
+        ("sql", "core", "advanced"), ("etl", "core", "intermediate"),
+        ("data_warehousing", "core", "intermediate"), ("python", "core", "intermediate"),
+        ("aws", "nice-to-have", "intermediate"), ("data_modeling", "core", "intermediate"),
+    ]),
+    ("devops_engineer", "DevOps Engineer", "Infrastructure", "Mid", "Automates delivery and keeps environments consistent.", [
+        ("linux", "core", "intermediate"), ("docker", "core", "intermediate"),
+        ("kubernetes", "core", "intermediate"), ("ci_cd", "core", "intermediate"),
+        ("terraform", "nice-to-have", "intermediate"), ("aws", "core", "intermediate"),
+    ]),
+    ("site_reliability_engineer", "Site Reliability Engineer", "Infrastructure", "Senior", "Keeps production systems fast, available and observable.", [
+        ("linux", "core", "advanced"), ("kubernetes", "core", "advanced"),
