@@ -136,6 +136,7 @@ COURSES = [
     ("mentoring_and_leadership", "Mentoring & Leadership", "Internal Academy", "Intermediate", 8, "https://example.com/courses/mentoring", ["mentoring"], ["communication"]),
     ("market_analysis_for_pms", "Market Analysis for Product Managers", "Reforge", "Intermediate", 8, "https://example.com/courses/market-analysis", ["market_analysis"], ["product_strategy"]),
 ]
+
 # (before_course_id, after_course_id) -- before must be completed first
 COURSE_PREREQUISITES = [
     ("python_fundamentals", "python_intermediate"),
