@@ -23,3 +23,10 @@ export default function RoleDetailPage() {
     mutate: computePath,
   } = useApiMutation<{ known_skill_ids: string[]; target_role_id: string }, LearningPathResult>("/learning-path");
 
+  useEffect(() => {
+    if (roleId && knownSkillIds.length > 0) {
+      computePath({ known_skill_ids: knownSkillIds, target_role_id: roleId }).catch(() => {});
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roleId, knownSkillIds.join(",")]);
+
