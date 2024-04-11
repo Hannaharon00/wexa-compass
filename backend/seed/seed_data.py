@@ -180,6 +180,27 @@ COURSE_PREREQUISITES = [
 # each requirement: (skill_id, importance["core"|"nice-to-have"], min_level)
 ROLES = [
     ("frontend_engineer", "Frontend Engineer", "Software", "Mid", "Builds user-facing web interfaces and owns their quality.", [
+        ("javascript", "core", "intermediate"), ("typescript", "core", "intermediate"),
+        ("react", "core", "intermediate"), ("design_systems", "nice-to-have", "beginner"),
+        ("accessibility", "nice-to-have", "intermediate"), ("git", "core", "beginner"),
+    ]),
+    ("backend_engineer", "Backend Engineer", "Software", "Mid", "Designs and operates the services behind the product.", [
+        ("python", "core", "intermediate"), ("rest_apis", "core", "intermediate"),
+        ("sql", "core", "intermediate"), ("systems_design", "core", "intermediate"),
+        ("git", "core", "beginner"), ("docker", "nice-to-have", "beginner"),
+    ]),
+    ("fullstack_engineer", "Full-Stack Engineer", "Software", "Mid", "Comfortable across the whole web stack, front to back.", [
+        ("javascript", "core", "intermediate"), ("react", "core", "intermediate"),
+        ("nodejs", "core", "intermediate"), ("sql", "core", "beginner"),
+        ("rest_apis", "core", "intermediate"), ("git", "core", "beginner"),
+    ]),
+    ("data_analyst", "Data Analyst", "Data", "Junior", "Turns raw data into decisions the business can act on.", [
+        ("sql", "core", "intermediate"), ("pandas", "core", "intermediate"),
+        ("data_visualization", "core", "intermediate"), ("statistics", "core", "beginner"),
+        ("communication", "nice-to-have", "beginner"),
+    ]),
+    ("data_scientist", "Data Scientist", "Data", "Mid", "Builds statistical and ML models to answer harder questions.", [
+        ("python", "core", "intermediate"), ("statistics", "core", "advanced"),
         ("machine_learning", "core", "intermediate"), ("pandas", "core", "intermediate"),
         ("data_visualization", "nice-to-have", "intermediate"), ("sql", "nice-to-have", "beginner"),
     ]),

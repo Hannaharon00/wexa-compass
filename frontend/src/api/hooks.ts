@@ -45,3 +45,21 @@ export function useApiQuery<T>(path: string | null, deps: unknown[] = []): Query
 export function useApiMutation<TBody, TResult>(path: string) {
   const [state, setState] = useState<QueryState<TResult>>({ data: null, loading: false, error: null });
 
+  const mutate = useCallback(
+    async (body: TBody) => {
+      setState({ data: null, loading: true, error: null });
+      try {
+        const data = await api.post<TResult>(path, body);
+        setState({ data, loading: false, error: null });
+        return data;
+      } catch (err) {
+        const message = err instanceof ApiError ? err.message : "Something went wrong.";
+        setState({ data: null, loading: false, error: message });
+        throw err;
+      }
+    },
+    [path]
+  );
+
+  return { ...state, mutate };
+}
