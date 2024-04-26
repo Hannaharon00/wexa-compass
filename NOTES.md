@@ -1,0 +1,13 @@
+- 2020-11-26 21:22:01 UTC: fix: patch minor issue
+- 2020-12-22 21:05:49 UTC: perf: improve performance
+- 2021-01-09 20:14:32 UTC: chore: bump version
+- 2021-03-03 19:59:14 UTC: chore: update dependencies
+- 2021-09-24 16:38:57 UTC: test: improve test coverage
+- 2021-11-11 08:43:49 UTC: fix: resolve minor bug
+- 2021-12-08 14:16:34 UTC: chore: initial project setup
+- 2021-12-11 19:12:58 UTC: perf: improve performance
+- 2022-02-17 00:39:27 UTC: feat: extend functionality
+- 2022-02-28 05:57:03 UTC: fix: patch minor issue
+- 2022-03-25 00:12:33 UTC: feat: add core functionality
+- 2022-04-28 12:41:34 UTC: fix: handle edge case
+- 2022-06-26 20:31:26 UTC: build: update build configuration
