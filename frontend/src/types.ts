@@ -30,3 +30,20 @@ export interface CoursePrerequisite {
   chain_length: number;
 }
 
+export interface RoleSummary {
+  role_id: string;
+  title: string;
+  industry: string | null;
+  seniority: string | null;
+  description: string | null;
+  skill_count: number;
+}
+
+export interface RoleRequiredSkill {
+  skill_id: string;
+  name: string;
+  category: string | null;
+  importance: "core" | "nice-to-have";
+  min_level: string;
+}
+
