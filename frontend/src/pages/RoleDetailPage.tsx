@@ -30,3 +30,9 @@ export default function RoleDetailPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roleId, knownSkillIds.join(",")]);
 
+  return (
+    <div className="animate-fade-in">
+      <Link to="/roles" className="mb-4 inline-flex items-center gap-1 text-sm text-slate-500 hover:text-indigo-600">
+        ← All roles
+      </Link>
+
