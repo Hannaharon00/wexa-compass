@@ -143,3 +143,25 @@ def learning_path(body: LearningPathRequest):
     meta_rows = run_query(queries.COURSES_BY_IDS, {"course_ids": list(all_course_ids)})
     meta = {r["course_id"]: r for r in meta_rows}
 
+    edges = run_query(queries.COURSE_PREREQ_EDGES_AMONG, {"course_ids": list(all_course_ids)})
+    ordered_ids = _topological_order(all_course_ids, edges, meta)
+
+    course_path = []
+    for cid in ordered_ids:
+        m = meta.get(cid, {})
+        course_path.append(
+            {
+                **m,
+                "covers_missing_skills": skills_covered_by_course.get(cid, []),
+                "is_prerequisite_only": cid not in core_course_ids,
+            }
+        )
+
+    return {
+        "role": {"role_id": role["role_id"], "title": role["title"]},
+        "already_qualified": False,
+        "known_skill_count": len(known),
+        "missing_skill_count": len(missing_skill_ids),
+        "courses": course_path,
+        "uncovered_skills": uncovered_skills,
+    }
