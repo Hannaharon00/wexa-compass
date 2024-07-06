@@ -221,3 +221,22 @@ ROLES = [
     ]),
     ("site_reliability_engineer", "Site Reliability Engineer", "Infrastructure", "Senior", "Keeps production systems fast, available and observable.", [
         ("linux", "core", "advanced"), ("kubernetes", "core", "advanced"),
+        ("user_research", "nice-to-have", "beginner"),
+    ]),
+    ("qa_test_engineer", "QA / Test Engineer", "Software", "Junior", "Protects product quality through testing and process.", [
+        ("sql", "nice-to-have", "beginner"), ("javascript", "nice-to-have", "beginner"),
+        ("git", "core", "beginner"), ("agile_scrum", "core", "beginner"),
+        ("technical_writing", "nice-to-have", "beginner"), ("application_security", "nice-to-have", "beginner"),
+    ]),
+    ("engineering_manager", "Engineering Manager", "Software", "Senior", "Leads an engineering team's people and delivery.", [
+        ("project_management", "core", "intermediate"), ("agile_scrum", "core", "intermediate"),
+        ("mentoring", "core", "intermediate"), ("communication", "core", "advanced"),
+        ("systems_design", "nice-to-have", "intermediate"), ("stakeholder_management", "nice-to-have", "intermediate"),
+    ]),
+    ("solutions_architect", "Solutions Architect", "Infrastructure", "Senior", "Designs system architecture across teams and platforms.", [
+        ("systems_design", "core", "advanced"), ("aws", "core", "advanced"),
+        ("distributed_systems", "core", "intermediate"), ("terraform", "nice-to-have", "intermediate"),
+        ("computer_networking", "nice-to-have", "intermediate"), ("rest_apis", "core", "intermediate"),
+    ]),
+]
+
