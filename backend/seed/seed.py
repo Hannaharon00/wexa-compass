@@ -34,6 +34,13 @@ def reset(session) -> None:
     session.run("MATCH (n) DETACH DELETE n")
 
 
+def create_constraints(session) -> None:
+    for label, prop in [("Skill", "skill_id"), ("Course", "course_id"), ("Role", "role_id")]:
+        session.run(
+            f"CREATE CONSTRAINT IF NOT EXISTS FOR (n:{label}) REQUIRE n.{prop} IS UNIQUE"
+        )
+
+
 def load_courses(session) -> None:
     rows = [
         {
