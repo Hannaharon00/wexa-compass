@@ -60,3 +60,29 @@ def close_driver() -> None:
         _driver = None
 
 
+@contextmanager
+def get_session() -> Iterator[Any]:
+    if _driver is None:
+        raise DatabaseUnavailableError(
+            "No database driver configured. Check COGNODB_URI / COGNODB_PASSWORD."
+        )
+    try:
+        with _driver.session(database=settings.cognodb_database) as session:
+            yield session
+    except (ServiceUnavailable, AuthError) as exc:
+        raise DatabaseUnavailableError(f"CognoDB is unreachable: {exc}") from exc
+
+
+def run_query(cypher: str, parameters: dict | None = None) -> list[dict]:
+    """Run a parameterised Cypher query and return a list of plain dicts.
+
+    Every query in this app goes through here with parameters passed
+    separately from the query text -- never string-concatenated -- so
+    user input can never be interpreted as Cypher.
+    """
+    with get_session() as session:
+        try:
+            result = session.run(cypher, parameters or {})
+            return [record.data() for record in result]
+        except Neo4jError as exc:
+            raise DatabaseUnavailableError(f"Query failed: {exc}") from exc
