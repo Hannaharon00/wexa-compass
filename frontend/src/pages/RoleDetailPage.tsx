@@ -36,3 +36,6 @@ export default function RoleDetailPage() {
         ← All roles
       </Link>
 
+        {knownSkillIds.length > 0 && pathLoading && <LoadingState label="Computing the shortest path through the course graph…" />}
+        {pathError && <ErrorState message={pathError} onRetry={() => computePath({ known_skill_ids: knownSkillIds, target_role_id: roleId! })} />}
+
