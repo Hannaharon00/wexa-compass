@@ -6,6 +6,10 @@ import { EmptyState, ErrorState, LoadingState } from "../components/StateViews";
 import { categoryStyle } from "../lib/categoryColors";
 import SkillGraph from "../components/SkillGraph";
 
+  useEffect(() => {
+    if (!selectedId && skills && skills.length > 0) setSelectedId(skills[0].skill_id);
+  }, [skills, selectedId]);
+
   const {
     data: neighbors,
     loading: neighborsLoading,
