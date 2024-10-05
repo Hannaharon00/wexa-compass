@@ -62,6 +62,17 @@ function Label({
   );
 }
 
+export default function SkillGraph({
+  centerName,
+  neighbors,
+  onSelect,
+}: {
+  centerName: string;
+  neighbors: SkillNeighbor[];
+  onSelect: (skillId: string) => void;
+}) {
+  const [hovered, setHovered] = useState<string | null>(null);
+
   const positioned = useMemo<Positioned[]>(() => {
     const byHop = new Map<number, SkillNeighbor[]>();
     for (const n of neighbors) {
