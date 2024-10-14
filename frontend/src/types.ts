@@ -47,3 +47,20 @@ export interface RoleRequiredSkill {
   min_level: string;
 }
 
+export interface LearningPathCourse {
+  course_id: string;
+  title: string;
+  provider: string | null;
+  level: string | null;
+  duration_hours: number | null;
+  url: string | null;
+  covers_missing_skills: string[];
+  is_prerequisite_only: boolean;
+}
+
+export interface UncoveredSkill {
+  skill_id: string;
+  name: string;
+  closest_known_bridge: { bridge: { skill_id: string; name: string }[]; hops: number } | null;
+}
+
