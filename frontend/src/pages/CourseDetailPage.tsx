@@ -13,6 +13,14 @@ const LEVEL_STYLE: Record<string, string> = {
   Advanced: "bg-rose-50 text-rose-700 border-rose-200",
 };
 
+export default function CourseDetailPage() {
+  const { courseId } = useParams<{ courseId: string }>();
+  const { data: course, loading, error, refetch } = useApiQuery<CourseWithSkills>(courseId ? `/courses/${courseId}` : null, [courseId]);
+  const { data: chain, loading: chainLoading } = useApiQuery<CoursePrerequisite[]>(
+    courseId ? `/courses/${courseId}/prerequisites` : null,
+    [courseId]
+  );
+
   if (loading) return <LoadingState label="Loading course…" />;
   if (error) return <ErrorState message={error} onRetry={refetch} />;
   if (!course) return null;
