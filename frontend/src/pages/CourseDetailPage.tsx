@@ -31,3 +31,21 @@ export default function CourseDetailPage() {
         ← All courses
       </Link>
 
+      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-indigo-500">{course.provider}</p>
+            <h1 className="font-display mt-1 text-3xl font-semibold text-slate-900">{course.title}</h1>
+            <p className="mt-1 text-sm text-slate-500">{course.duration_hours} hours</p>
+          </div>
+          {course.level && (
+            <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${LEVEL_STYLE[course.level] ?? ""}`}>{course.level}</span>
+          )}
+        </div>
+
+        {course.url && (
+          <a href={course.url} target="_blank" rel="noreferrer" className="mt-4 inline-block text-sm font-medium text-indigo-600 hover:underline">
+            View course ↗
+          </a>
+        )}
+
