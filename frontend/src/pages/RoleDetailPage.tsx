@@ -34,6 +34,10 @@ export default function RoleDetailPage() {
   if (error) return <ErrorState message={error} onRetry={refetch} />;
   if (!role) return null;
 
+  const knownSet = new Set(knownSkillIds);
+  const core = role.required_skills.filter((s) => s.importance === "core");
+  const niceToHave = role.required_skills.filter((s) => s.importance !== "core");
+
   return (
     <div className="animate-fade-in">
       <Link to="/roles" className="mb-4 inline-flex items-center gap-1 text-sm text-slate-500 hover:text-indigo-600">
