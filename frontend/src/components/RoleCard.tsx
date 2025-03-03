@@ -24,3 +24,5 @@ export default function RoleCard({
         </div>
         {role.industry && <p className="mb-2 text-xs font-medium uppercase tracking-wide text-indigo-500">{role.industry}</p>}
         <p className="line-clamp-2 text-sm text-slate-500">{role.description}</p>
+      </div>
+
