@@ -64,3 +64,11 @@ export interface UncoveredSkill {
   closest_known_bridge: { bridge: { skill_id: string; name: string }[]; hops: number } | null;
 }
 
+export interface LearningPathResult {
+  role: { role_id: string; title: string };
+  already_qualified: boolean;
+  known_skill_count?: number;
+  missing_skill_count?: number;
+  courses: LearningPathCourse[];
+  uncovered_skills: UncoveredSkill[];
+}

@@ -44,6 +44,9 @@ export default function RoleDetailPage() {
         ← All roles
       </Link>
 
+      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+        <h2 className="font-display text-xl font-semibold text-slate-900">Your learning path</h2>
+
         {knownSkillIds.length > 0 && pathLoading && <LoadingState label="Computing the shortest path through the course graph…" />}
         {pathError && <ErrorState message={pathError} onRetry={() => computePath({ known_skill_ids: knownSkillIds, target_role_id: roleId! })} />}
 
