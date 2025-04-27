@@ -43,6 +43,22 @@ def create_constraints(session) -> None:
         )
 
 
+def load_skills(session) -> None:
+    rows = [
+        {"skill_id": s, "name": n, "category": c, "description": d}
+        for s, n, c, d in SKILLS
+    ]
+    session.run(
+        """
+        UNWIND $rows AS row
+        MERGE (s:Skill {skill_id: row.skill_id})
+        SET s.name = row.name, s.category = row.category, s.description = row.description
+        """,
+        rows=rows,
+    )
+    print(f"Loaded {len(rows)} Skill nodes.")
+
+
 def load_courses(session) -> None:
     rows = [
         {

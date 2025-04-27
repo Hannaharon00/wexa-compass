@@ -240,6 +240,9 @@ ROLES = [
     ]),
 ]
 
+# (skill_a, skill_b, strength 0-1) -- undirected; stored as one directed
+# edge and queried with an undirected MATCH pattern.
+SKILL_RELATIONSHIPS = [
     ("python", "data_structures_algorithms", 0.7),
     ("python", "statistics", 0.5),
     ("python", "machine_learning", 0.6),
