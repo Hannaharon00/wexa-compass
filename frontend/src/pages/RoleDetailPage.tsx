@@ -50,3 +50,59 @@ export default function RoleDetailPage() {
         {knownSkillIds.length > 0 && pathLoading && <LoadingState label="Computing the shortest path through the course graph…" />}
         {pathError && <ErrorState message={pathError} onRetry={() => computePath({ known_skill_ids: knownSkillIds, target_role_id: roleId! })} />}
 
+        {path && !pathLoading && (
+          <div className="mt-5">
+            {path.already_qualified ? (
+              <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 text-sm font-medium text-emerald-700">
+                You already have every skill required for this role. 🎉
+              </div>
+            ) : (
+              <>
+                <p className="mb-4 text-sm text-slate-500">
+                  Missing <strong className="text-slate-700">{path.missing_skill_count}</strong> of the role's required skills.
+                  Here's the shortest ordered path of courses to close that gap, respecting each course's own
+                  prerequisites.
+                </p>
+                {path.courses.length === 0 ? (
+                  <EmptyState title="No course path found" description="Nothing in the catalog currently teaches the missing skills directly." />
+                ) : (
+                  <ol className="space-y-3">
+                    {path.courses.map((course, i) => (
+                      <li key={course.course_id} className="flex gap-4 rounded-2xl border border-slate-200 p-4">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-white">
+                          {i + 1}
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <Link to={`/courses/${course.course_id}`} className="font-semibold text-slate-900 hover:text-indigo-700">
+                              {course.title}
+                            </Link>
+                            {course.level && (
+                              <span className={`rounded-full border px-2 py-0.5 text-[11px] font-semibold ${LEVEL_STYLE[course.level] ?? ""}`}>
+                                {course.level}
+                              </span>
+                            )}
+                            {course.is_prerequisite_only && (
+                              <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-500">
+                                Prerequisite
+                              </span>
+                            )}
+                          </div>
+                          <p className="mt-0.5 text-xs text-slate-500">
+                            {course.provider} · {course.duration_hours}h
+                          </p>
+                          {course.covers_missing_skills.length > 0 && (
+                            <div className="mt-2 flex flex-wrap gap-1.5">
+                              {course.covers_missing_skills.map((s) => (
+                                <span key={s} className="rounded-full bg-indigo-50 px-2.5 py-1 text-[11px] font-medium text-indigo-700">
+                                  covers {s}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                )}
+
