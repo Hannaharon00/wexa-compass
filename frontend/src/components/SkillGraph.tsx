@@ -21,6 +21,10 @@ function estimateTextWidth(text: string, fontSize: number) {
   return text.length * fontSize * 0.58;
 }
 
+function truncate(name: string) {
+  return name.length > MAX_LABEL ? name.slice(0, MAX_LABEL - 1) + "…" : name;
+}
+
 function Label({
   text,
   y,
