@@ -115,6 +115,25 @@ RETURN r.role_id AS role_id, r.title AS title, r.industry AS industry,
        }) AS required_skills
 """
 
+# Ranks every role by how much of its required skill set the visitor
+# already has. A simple aggregation, but one that only makes sense
+# because REQUIRES_SKILL is a first-class typed edge rather than a
+# denormalised column.
+RECOMMEND_ROLES = """
+MATCH (r:Role)-[req:REQUIRES_SKILL]->(s:Skill)
+WITH r, count(s) AS total,
+     sum(CASE WHEN s.skill_id IN $known_skill_ids THEN 1 ELSE 0 END) AS matched
+WHERE total > 0
+RETURN r.role_id AS role_id, r.title AS title, r.industry AS industry,
+       r.seniority AS seniority, matched, total,
+       round(100.0 * matched / total) AS match_percent
+ORDER BY match_percent DESC, total DESC
+"""
+
+# ---------------------------------------------------------------------------
+# Flagship query: learning path to a role
+# ---------------------------------------------------------------------------
+
 # Step 1: which of the role's required skills are missing, and for each
 # missing skill, which courses teach it and what *other* skills does
 # that course itself require first (its own prerequisites, which may or

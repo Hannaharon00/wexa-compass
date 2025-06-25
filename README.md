@@ -176,6 +176,14 @@ uvicorn app.main:app --port 8000
 
 Visit `http://localhost:8000` — FastAPI serves the built frontend directly alongside the `/api/*` routes.
 
+**Course prerequisite chain** (`COURSE_PREREQUISITE_CHAIN`) — an unbounded variable-length walk (`*1..6`) up a course's prerequisite tree. This is the query a relational database handles worst: the chain depth isn't known ahead of time, so SQL needs a recursive CTE, and even then returning "every course on the path, in order" from a single query is awkward. Here it's one pattern match.
+
+**Shortest skill bridge** (`SHORTEST_SKILL_BRIDGE`) — `shortestPath()` between a skill you know and one you're missing, with no fixed hop count. Used when a role needs a skill no course directly teaches, to suggest the closest conceptually-related thing you already know.
+
+A small, deliberate exception: `SKILL_NEIGHBORHOOD`'s hop count (`*1..$depth`) can't be a bound Cypher parameter — openCypher only accepts literal integers in a variable-length relationship range. The depth is validated as an integer in `[1, 3]` by FastAPI (`Query(..., ge=1, le=3)`) before being formatted into the query text, so it's never raw user input — just not a bind parameter, because the language doesn't allow one there. This is called out explicitly in [`routers/skills.py`](backend/app/routers/skills.py).
+
+## Error handling
+
 If CognoDB is unreachable — wrong credentials, instance paused, network issue — the backend never crashes or leaks a driver stack trace. `db.py` wraps every query and raises a typed `DatabaseUnavailableError`, which a FastAPI exception handler in `main.py` turns into a clean `503` with a human-readable message. The frontend's `ErrorState` component renders that message with a retry button on every page. Try it: stop your CognoDB instance (or clear `COGNODB_PASSWORD` in `.env`) and reload the app.
 
 ## Deployment
