@@ -44,6 +44,22 @@ export default function RoleDetailPage() {
         ← All roles
       </Link>
 
+      <div className="mb-8 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-indigo-500">{role.industry}</p>
+            <h1 className="font-display mt-1 text-3xl font-semibold text-slate-900">{role.title}</h1>
+          </div>
+          {role.seniority && <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-500">{role.seniority}</span>}
+        </div>
+        <p className="mt-3 max-w-2xl text-sm text-slate-600">{role.description}</p>
+
+        <div className="mt-6 grid gap-6 sm:grid-cols-2">
+          <SkillGroup label="Core skills" skills={core} knownSet={knownSet} />
+          <SkillGroup label="Nice to have" skills={niceToHave} knownSet={knownSet} />
+        </div>
+      </div>
+
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
         <h2 className="font-display text-xl font-semibold text-slate-900">Your learning path</h2>
 
