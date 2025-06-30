@@ -176,6 +176,17 @@ uvicorn app.main:app --port 8000
 
 Visit `http://localhost:8000` — FastAPI serves the built frontend directly alongside the `/api/*` routes.
 
+## The main queries, explained
+
+All queries live in [`backend/app/queries.py`](backend/app/queries.py) and are executed with parameters via the official `neo4j` Python driver ([`backend/app/db.py`](backend/app/db.py)) — no query string ever has a value concatenated into it.
+
+**Learning path to a role** (`LEARNING_PATH_CANDIDATES`, in `routers/paths.py`) — the flagship query. Given a role and the skills you already know:
+1. Cypher finds the role's required skills you're missing, then every course that teaches each one, along with that course's own unmet prerequisite skills.
+2. Cypher separately walks each candidate course's full prerequisite chain (`COURSE_PREREQUISITE_CHAIN`, unbounded-depth `[:PREREQUISITE_OF*1..6]`), so foundational courses are included even if they don't directly teach a missing skill.
+3. Python topologically sorts the resulting course subgraph (Kahn's algorithm) into one deterministic, ordered plan. Cypher and SQL both traverse graphs, but neither has a built-in "topologically sort these nodes" primitive — this is the honest place to hand off from database traversal to a standard algorithm over the small subgraph the database returned.
+
+**Skill neighborhood** (`SKILL_NEIGHBORHOOD`) — a 1-to-3-hop variable-length traversal of the `RELATED_TO` graph, powering the Skill Graph page. A genuine multi-hop traversal: each additional hop reaches skills with no direct connection at all to the one you started from, something a single JOIN can't express.
+
 **Course prerequisite chain** (`COURSE_PREREQUISITE_CHAIN`) — an unbounded variable-length walk (`*1..6`) up a course's prerequisite tree. This is the query a relational database handles worst: the chain depth isn't known ahead of time, so SQL needs a recursive CTE, and even then returning "every course on the path, in order" from a single query is awkward. Here it's one pattern match.
 
 **Shortest skill bridge** (`SHORTEST_SKILL_BRIDGE`) — `shortestPath()` between a skill you know and one you're missing, with no fixed hop count. Used when a role needs a skill no course directly teaches, to suggest the closest conceptually-related thing you already know.

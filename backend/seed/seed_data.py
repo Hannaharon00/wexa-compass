@@ -221,6 +221,27 @@ ROLES = [
     ]),
     ("site_reliability_engineer", "Site Reliability Engineer", "Infrastructure", "Senior", "Keeps production systems fast, available and observable.", [
         ("linux", "core", "advanced"), ("kubernetes", "core", "advanced"),
+        ("monitoring_observability", "core", "intermediate"), ("computer_networking", "core", "intermediate"),
+        ("systems_design", "core", "advanced"), ("bash_scripting", "nice-to-have", "intermediate"),
+    ]),
+    ("security_engineer", "Security Engineer", "Security", "Mid", "Finds, fixes and prevents security weaknesses.", [
+        ("application_security", "core", "advanced"), ("threat_modeling", "core", "intermediate"),
+        ("cryptography_basics", "core", "intermediate"), ("identity_access_management", "core", "intermediate"),
+        ("computer_networking", "nice-to-have", "intermediate"), ("linux", "nice-to-have", "intermediate"),
+    ]),
+    ("product_manager", "Product Manager", "Product", "Mid", "Decides what gets built and why, and rallies the team behind it.", [
+        ("product_strategy", "core", "intermediate"), ("roadmapping", "core", "intermediate"),
+        ("user_research", "core", "beginner"), ("ab_testing", "nice-to-have", "beginner"),
+        ("stakeholder_management", "core", "intermediate"), ("communication", "core", "intermediate"),
+    ]),
+    ("ux_designer", "UX Designer", "Design", "Mid", "Researches and designs how the product should work.", [
+        ("ui_design", "core", "intermediate"), ("ux_research", "core", "intermediate"),
+        ("figma", "core", "intermediate"), ("prototyping", "core", "intermediate"),
+        ("accessibility", "nice-to-have", "beginner"),
+    ]),
+    ("product_designer", "Product Designer", "Design", "Mid", "Owns visual and interaction design across the product.", [
+        ("ui_design", "core", "intermediate"), ("figma", "core", "intermediate"),
+        ("design_systems", "core", "intermediate"), ("prototyping", "nice-to-have", "intermediate"),
         ("user_research", "nice-to-have", "beginner"),
     ]),
     ("qa_test_engineer", "QA / Test Engineer", "Software", "Junior", "Protects product quality through testing and process.", [
