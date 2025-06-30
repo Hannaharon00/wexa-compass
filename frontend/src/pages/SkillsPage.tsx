@@ -18,3 +18,9 @@ import SkillGraph from "../components/SkillGraph";
 
   const selectedSkill = useMemo(() => skills?.find((s) => s.skill_id === selectedId) ?? null, [skills, selectedId]);
 
+  const filteredSkills = useMemo(() => {
+    if (!skills) return [];
+    const q = query.trim().toLowerCase();
+    return q ? skills.filter((s) => s.name.toLowerCase().includes(q)) : skills;
+  }, [skills, query]);
+
