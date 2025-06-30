@@ -99,3 +99,28 @@ export default function SkillGraph({
     return result;
   }, [neighbors]);
 
+  return (
+    <svg
+      viewBox={`0 0 ${SIZE} ${SIZE}`}
+      className="w-full overflow-visible"
+      role="img"
+      aria-label={`Skills related to ${centerName}`}
+    >
+      {/* Guide rings */}
+      <circle cx={CENTER} cy={CENTER} r={RADIUS_BY_HOP[1]} fill="none" stroke="#e2e8f0" strokeDasharray="2 6" />
+      <circle cx={CENTER} cy={CENTER} r={RADIUS_BY_HOP[2]} fill="none" stroke="#e2e8f0" strokeDasharray="2 6" />
+
+      {/* Edges */}
+      {positioned.map((n) => (
+        <line
+          key={`edge-${n.skill_id}`}
+          x1={CENTER}
+          y1={CENTER}
+          x2={n.x}
+          y2={n.y}
+          stroke={hovered === n.skill_id ? "#6366f1" : "#cbd5e1"}
+          strokeWidth={hovered === n.skill_id ? 2 : 1}
+          strokeDasharray={n.hops > 1 ? "4 4" : undefined}
+        />
+      ))}
+
