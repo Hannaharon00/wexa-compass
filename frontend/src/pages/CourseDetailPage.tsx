@@ -49,3 +49,32 @@ export default function CourseDetailPage() {
           </a>
         )}
 
+        {chainLoading && <LoadingState label="Walking the prerequisite graph…" />}
+        {!chainLoading && (!chain || chain.length === 0) && (
+          <div className="mt-4">
+            <EmptyState title="No prerequisites" description="This course has no foundational courses ahead of it — a good starting point." />
+          </div>
+        )}
+        {!chainLoading && chain && chain.length > 0 && (
+          <ol className="mt-5 flex flex-wrap items-center gap-2">
+            {chain.map((step, i) => (
+              <li key={step.course_id} className="flex items-center gap-2">
+                <Link
+                  to={`/courses/${step.course_id}`}
+                  className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm hover:border-indigo-300 hover:text-indigo-700"
+                >
+                  {step.title}
+                </Link>
+                {i < chain.length - 1 && (
+                  <span className="text-slate-300">→</span>
+                )}
+              </li>
+            ))}
+            <span className="text-slate-300">→</span>
+            <li className="rounded-full bg-indigo-600 px-3 py-1.5 text-sm font-semibold text-white">{course.title}</li>
+          </ol>
+        )}
+      </div>
+    </div>
+  );
+}
