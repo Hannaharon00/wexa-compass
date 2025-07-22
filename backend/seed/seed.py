@@ -123,3 +123,40 @@ def load_courses(session) -> None:
     print(f"Loaded {len(prereq_rows)} PREREQUISITE_OF relationships.")
 
 
+def load_roles(session) -> None:
+    rows = [
+        {
+            "role_id": rid, "title": title, "industry": industry,
+            "seniority": seniority, "description": description,
+        }
+        for rid, title, industry, seniority, description, _reqs in ROLES
+    ]
+    session.run(
+        """
+        UNWIND $rows AS row
+        MERGE (r:Role {role_id: row.role_id})
+        SET r.title = row.title, r.industry = row.industry,
+            r.seniority = row.seniority, r.description = row.description
+        """,
+        rows=rows,
+    )
+    print(f"Loaded {len(rows)} Role nodes.")
+
+    req_rows = [
+        {"role_id": rid, "skill_id": skill_id, "importance": importance, "min_level": min_level}
+        for rid, *_rest, requirements in ROLES
+        for skill_id, importance, min_level in requirements
+    ]
+    session.run(
+        """
+        UNWIND $rows AS row
+        MATCH (r:Role {role_id: row.role_id})
+        MATCH (s:Skill {skill_id: row.skill_id})
+        MERGE (r)-[req:REQUIRES_SKILL]->(s)
+        SET req.importance = row.importance, req.min_level = row.min_level
+        """,
+        rows=req_rows,
+    )
+    print(f"Loaded {len(req_rows)} REQUIRES_SKILL relationships.")
+
+
