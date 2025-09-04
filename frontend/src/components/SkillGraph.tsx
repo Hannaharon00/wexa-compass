@@ -124,3 +124,9 @@ export default function SkillGraph({
         />
       ))}
 
+      {/* Center node */}
+      <g transform={`translate(${CENTER}, ${CENTER})`}>
+        <circle r={10} fill="#4338ca" stroke="white" strokeWidth={2} />
+        <Label text={centerName} y={16} fontSize={12} bold />
+      </g>
+
