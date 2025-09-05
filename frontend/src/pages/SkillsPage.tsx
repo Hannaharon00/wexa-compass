@@ -30,3 +30,6 @@ export default function SkillsPage() {
     return q ? skills.filter((s) => s.name.toLowerCase().includes(q)) : skills;
   }, [skills, query]);
 
+  if (loading) return <LoadingState label="Loading skill graph…" />;
+  if (error) return <ErrorState message={error} onRetry={refetch} />;
+

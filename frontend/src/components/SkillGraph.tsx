@@ -130,3 +130,24 @@ export default function SkillGraph({
         <Label text={centerName} y={16} fontSize={12} bold />
       </g>
 
+      {/* Neighbor nodes */}
+      {positioned.map((n) => {
+        const style = categoryStyle(n.category);
+        const isHovered = hovered === n.skill_id;
+        return (
+          <g
+            key={n.skill_id}
+            transform={`translate(${n.x}, ${n.y})`}
+            className="cursor-pointer"
+            onClick={() => onSelect(n.skill_id)}
+            onMouseEnter={() => setHovered(n.skill_id)}
+            onMouseLeave={() => setHovered(null)}
+          >
+            <circle r={isHovered ? 9 : 7} className={style.fill} fillOpacity={n.hops > 1 ? 0.75 : 1} stroke="white" strokeWidth={1.5} />
+            <Label text={n.name} y={12} fontSize={10} />
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
