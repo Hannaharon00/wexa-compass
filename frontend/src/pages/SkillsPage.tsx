@@ -6,6 +6,12 @@ import { EmptyState, ErrorState, LoadingState } from "../components/StateViews";
 import { categoryStyle } from "../lib/categoryColors";
 import SkillGraph from "../components/SkillGraph";
 
+export default function SkillsPage() {
+  const { data: skills, loading, error, refetch } = useApiQuery<Skill[]>("/skills");
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [depth, setDepth] = useState(2);
+  const [query, setQuery] = useState("");
+
   useEffect(() => {
     if (!selectedId && skills && skills.length > 0) setSelectedId(skills[0].skill_id);
   }, [skills, selectedId]);
