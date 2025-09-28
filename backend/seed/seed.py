@@ -160,3 +160,20 @@ def load_roles(session) -> None:
     print(f"Loaded {len(req_rows)} REQUIRES_SKILL relationships.")
 
 
+def load_skill_relationships(session) -> None:
+    rows = [
+        {"a": a, "b": b, "strength": strength} for a, b, strength in SKILL_RELATIONSHIPS
+    ]
+    session.run(
+        """
+        UNWIND $rows AS row
+        MATCH (a:Skill {skill_id: row.a})
+        MATCH (b:Skill {skill_id: row.b})
+        MERGE (a)-[rel:RELATED_TO]-(b)
+        SET rel.strength = row.strength
+        """,
+        rows=rows,
+    )
+    print(f"Loaded {len(rows)} RELATED_TO relationships.")
+
+
