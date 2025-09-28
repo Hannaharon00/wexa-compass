@@ -171,3 +171,22 @@ ORDER BY hops ASC
 LIMIT 1
 """
 
+# Batch metadata lookup used once the learning-path algorithm (in
+# routers/paths.py) has decided on a final set of course ids, including
+# any prerequisite courses pulled in from the chain traversal above.
+COURSES_BY_IDS = """
+UNWIND $course_ids AS cid
+MATCH (c:Course {course_id: cid})
+RETURN c.course_id AS course_id, c.title AS title, c.provider AS provider,
+       c.level AS level, c.duration_hours AS duration_hours, c.url AS url
+"""
+
+# Pairwise PREREQUISITE_OF edges restricted to a specific set of courses,
+# used to topologically order the final learning-path course list.
+COURSE_PREREQ_EDGES_AMONG = """
+UNWIND $course_ids AS cid
+MATCH (a:Course {course_id: cid})-[:PREREQUISITE_OF]->(b:Course)
+WHERE b.course_id IN $course_ids
+RETURN DISTINCT a.course_id AS from_course, b.course_id AS to_course
+"""
+
