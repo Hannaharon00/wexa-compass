@@ -63,6 +63,20 @@ export default function RoleDetailPage() {
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
         <h2 className="font-display text-xl font-semibold text-slate-900">Your learning path</h2>
 
+        {knownSkillIds.length === 0 && (
+          <div className="mt-4">
+            <EmptyState
+              title="Select your known skills first"
+              description="Head to the Home page and pick what you already know — this page will compute an ordered course plan to close the gap for this role."
+              action={
+                <Link to="/" className="rounded-full bg-indigo-600 px-4 py-1.5 text-xs font-semibold text-white hover:bg-indigo-700">
+                  Select skills
+                </Link>
+              }
+            />
+          </div>
+        )}
+
         {knownSkillIds.length > 0 && pathLoading && <LoadingState label="Computing the shortest path through the course graph…" />}
         {pathError && <ErrorState message={pathError} onRetry={() => computePath({ known_skill_ids: knownSkillIds, target_role_id: roleId! })} />}
 
