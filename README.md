@@ -207,3 +207,8 @@ The live demo runs as two separately hosted services, both free tier:
   ```
   Environment variables (`COGNODB_URI`, `COGNODB_USER`, `COGNODB_PASSWORD`, `COGNODB_DATABASE`, `CORS_ORIGINS`) are set directly in Railway's dashboard — the same names as `.env`, just entered through the platform's UI instead of a file.
 
+- **Frontend (Vercel)** — deployed from the `frontend/` directory with the Vite preset. `frontend/vercel.json` adds an SPA rewrite so client-side routes (e.g. `/roles/backend_engineer`) resolve correctly on a hard refresh. One build-time environment variable is set: `VITE_API_BASE_URL`, pointing at the Railway backend's `/api` path — this is what lets `frontend/src/api/client.ts` call a different origin than the one it's served from (see the comment there for why the local/single-service default is different).
+
+- **CORS** — `CORS_ORIGINS` on Railway is locked to the exact Vercel URL, not a wildcard, so only the deployed frontend can call the API from a browser.
+
+Redeploying either service is just a `git push` — both platforms auto-deploy from the `main` branch.
