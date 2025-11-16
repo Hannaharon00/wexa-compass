@@ -47,6 +47,20 @@ export interface RoleRequiredSkill {
   min_level: string;
 }
 
+export interface RoleDetail extends RoleSummary {
+  required_skills: RoleRequiredSkill[];
+}
+
+export interface RoleRecommendation {
+  role_id: string;
+  title: string;
+  industry: string | null;
+  seniority: string | null;
+  matched: number;
+  total: number;
+  match_percent: number;
+}
+
 export interface LearningPathCourse {
   course_id: string;
   title: string;

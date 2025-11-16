@@ -177,3 +177,5 @@ def load_skill_relationships(session) -> None:
     print(f"Loaded {len(rows)} RELATED_TO relationships.")
 
 
+if __name__ == "__main__":
+    main()
