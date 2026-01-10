@@ -26,3 +26,26 @@ export default function RoleCard({
         <p className="line-clamp-2 text-sm text-slate-500">{role.description}</p>
       </div>
 
+      <div className="mt-4">
+        {match ? (
+          <div>
+            <div className="mb-1 flex items-center justify-between text-xs font-medium text-slate-500">
+              <span>Skill match</span>
+              <span className={match.match_percent >= 60 ? "text-emerald-600" : "text-slate-500"}>
+                {match.match_percent}% · {match.matched}/{match.total}
+              </span>
+            </div>
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+              <div
+                className={`h-full rounded-full ${match.match_percent >= 60 ? "bg-emerald-500" : "bg-indigo-400"}`}
+                style={{ width: `${match.match_percent}%` }}
+              />
+            </div>
+          </div>
+        ) : (
+          <p className="text-xs text-slate-400">{role.skill_count} required skills</p>
+        )}
+      </div>
+    </Link>
+  );
+}
