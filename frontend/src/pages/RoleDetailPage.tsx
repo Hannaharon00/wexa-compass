@@ -136,3 +136,32 @@ export default function RoleDetailPage() {
                   </ol>
                 )}
 
+                {path.uncovered_skills.length > 0 && (
+                  <div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+                    <p className="font-semibold">No direct course found for:</p>
+                    <ul className="mt-2 space-y-1">
+                      {path.uncovered_skills.map((s) => (
+                        <li key={s.skill_id}>
+                          <strong>{s.name}</strong>
+                          {s.closest_known_bridge && (
+                            <span className="text-amber-700">
+                              {" "}
+                              — closest related skill you know:{" "}
+                              {s.closest_known_bridge.bridge[0]?.name} ({s.closest_known_bridge.hops} hop
+                              {s.closest_known_bridge.hops === 1 ? "" : "s"} away)
+                            </span>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
