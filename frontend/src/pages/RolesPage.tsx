@@ -20,3 +20,15 @@ export default function RolesPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [knownSkillIds.join(",")]);
 
+  const matchByRole = useMemo(() => {
+    const map = new Map<string, RoleRecommendation>();
+    recommendations?.forEach((r) => map.set(r.role_id, r));
+    return map;
+  }, [recommendations]);
+
+  const sortedRoles = useMemo(() => {
+    if (!roles) return [];
+    if (matchByRole.size === 0) return roles;
+    return [...roles].sort((a, b) => (matchByRole.get(b.role_id)?.match_percent ?? 0) - (matchByRole.get(a.role_id)?.match_percent ?? 0));
+  }, [roles, matchByRole]);
+
