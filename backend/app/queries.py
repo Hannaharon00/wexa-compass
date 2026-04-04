@@ -190,3 +190,12 @@ WHERE b.course_id IN $course_ids
 RETURN DISTINCT a.course_id AS from_course, b.course_id AS to_course
 """
 
+# What each of a set of courses teaches, used to decide whether a course
+# pulled in from a prerequisite chain is actually still needed once the
+# learner's already-known skills are accounted for.
+COURSES_TEACHES_BY_IDS = """
+UNWIND $course_ids AS cid
+MATCH (c:Course {course_id: cid})
+OPTIONAL MATCH (c)-[:TEACHES]->(s:Skill)
+RETURN c.course_id AS course_id, collect(DISTINCT s.skill_id) AS teaches_skill_ids
+"""
