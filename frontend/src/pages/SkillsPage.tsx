@@ -33,3 +33,38 @@ export default function SkillsPage() {
   if (loading) return <LoadingState label="Loading skill graph…" />;
   if (error) return <ErrorState message={error} onRetry={refetch} />;
 
+          {neighborsLoading && <LoadingState label="Traversing the graph…" />}
+          {neighborsError && <ErrorState message={neighborsError} />}
+          {!neighborsLoading && neighbors && neighbors.length === 0 && (
+            <EmptyState title="No related skills found" description="This skill isn't connected to others in the seed data yet." />
+          )}
+          {!neighborsLoading && selectedSkill && neighbors && neighbors.length > 0 && (
+            <>
+              <SkillGraph centerName={selectedSkill.name} neighbors={neighbors} onSelect={setSelectedId} />
+              <div className="mt-4 flex flex-wrap gap-2">
+                {neighbors.map((n) => (
+                  <button
+                    key={n.skill_id}
+                    onClick={() => setSelectedId(n.skill_id)}
+                    className="rounded-full border border-slate-200 px-3 py-1 text-xs font-medium text-slate-600 hover:border-indigo-300 hover:text-indigo-700"
+                  >
+                    {n.name} · {n.hops} hop{n.hops > 1 ? "s" : ""}
+                    {n.courses.length > 0 && n.courses[0].course_id && (
+                      <>
+                        {" "}
+                        ·{" "}
+                        <Link to={`/courses/${n.courses[0].course_id}`} className="underline" onClick={(e) => e.stopPropagation()}>
+                          {n.courses[0].title}
+                        </Link>
+                      </>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
