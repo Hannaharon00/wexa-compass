@@ -32,3 +32,15 @@ export default function RolesPage() {
     return [...roles].sort((a, b) => (matchByRole.get(b.role_id)?.match_percent ?? 0) - (matchByRole.get(a.role_id)?.match_percent ?? 0));
   }, [roles, matchByRole]);
 
+      {loading && (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </div>
+      )}
+
+      {!loading && !error && sortedRoles.length === 0 && (
+        <EmptyState title="No roles yet" description="Run the seed script to load roles into CognoDB." />
+      )}
+
