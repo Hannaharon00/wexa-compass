@@ -33,6 +33,45 @@ export default function SkillsPage() {
   if (loading) return <LoadingState label="Loading skill graph…" />;
   if (error) return <ErrorState message={error} onRetry={refetch} />;
 
+  return (
+    <div className="animate-fade-in">
+      <div className="mb-6">
+        <h1 className="font-display text-3xl font-semibold text-slate-900">Skill Graph</h1>
+        <p className="mt-1 max-w-2xl text-sm text-slate-500">
+          Pick a skill to see what's conceptually adjacent to it, up to three hops out — the same{" "}
+          <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs">RELATED_TO</code> traversal that powers the
+          "closest bridge" suggestion on a role's learning path.
+        </p>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
+        <div>
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search skills…"
+            className="mb-3 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-sm shadow-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+          />
+          <div className="thin-scroll max-h-[32rem] space-y-1 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-2">
+            {filteredSkills.map((skill) => {
+              const style = categoryStyle(skill.category);
+              const active = skill.skill_id === selectedId;
+              return (
+                <button
+                  key={skill.skill_id}
+                  onClick={() => setSelectedId(skill.skill_id)}
+                  className={`flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm transition ${
+                    active ? "bg-indigo-600 text-white" : "text-slate-600 hover:bg-slate-100"
+                  }`}
+                >
+                  <span className={`h-1.5 w-1.5 rounded-full ${active ? "bg-white" : style.dot}`} />
+                  {skill.name}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
           {neighborsLoading && <LoadingState label="Traversing the graph…" />}
           {neighborsError && <ErrorState message={neighborsError} />}
           {!neighborsLoading && neighbors && neighbors.length === 0 && (
