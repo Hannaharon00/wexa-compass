@@ -32,6 +32,26 @@ export default function RolesPage() {
     return [...roles].sort((a, b) => (matchByRole.get(b.role_id)?.match_percent ?? 0) - (matchByRole.get(a.role_id)?.match_percent ?? 0));
   }, [roles, matchByRole]);
 
+  return (
+    <div className="animate-fade-in">
+      <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h1 className="font-display text-3xl font-semibold text-slate-900">Roles</h1>
+          <p className="mt-1 text-sm text-slate-500">
+            {knownSkillIds.length > 0
+              ? "Ranked by how much of each role's required skill graph you already match."
+              : "Pick your skills on the Home page to see personalized match scores."}
+          </p>
+        </div>
+        {knownSkillIds.length === 0 && (
+          <Link to="/" className="rounded-full bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-700">
+            Select your skills →
+          </Link>
+        )}
+      </div>
+
+      {error && <ErrorState message={error} onRetry={refetch} />}
+
       {loading && (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 6 }).map((_, i) => (
