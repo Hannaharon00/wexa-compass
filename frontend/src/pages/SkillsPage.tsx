@@ -72,6 +72,29 @@ export default function SkillsPage() {
           </div>
         </div>
 
+        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          {selectedSkill && (
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h2 className="font-display text-xl font-semibold text-slate-900">{selectedSkill.name}</h2>
+                <p className="text-sm text-slate-500">{selectedSkill.description}</p>
+              </div>
+              <div className="flex gap-1.5">
+                {[1, 2, 3].map((d) => (
+                  <button
+                    key={d}
+                    onClick={() => setDepth(d)}
+                    className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                      depth === d ? "bg-indigo-600 text-white" : "border border-slate-200 text-slate-500"
+                    }`}
+                  >
+                    {d} hop{d > 1 ? "s" : ""}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           {neighborsLoading && <LoadingState label="Traversing the graph…" />}
           {neighborsError && <ErrorState message={neighborsError} />}
           {!neighborsLoading && neighbors && neighbors.length === 0 && (

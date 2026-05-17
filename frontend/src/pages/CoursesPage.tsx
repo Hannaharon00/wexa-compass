@@ -64,3 +64,17 @@ export default function CoursesPage() {
         </div>
       )}
 
+      {!loading && !error && filtered.length === 0 && (
+        <EmptyState title="No courses match" description="Try a different search term or clear the level filter." />
+      )}
+
+      {!loading && filtered.length > 0 && (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {filtered.map((course) => (
+            <CourseCard key={course.course_id} course={course} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
