@@ -177,5 +177,34 @@ def load_skill_relationships(session) -> None:
     print(f"Loaded {len(rows)} RELATED_TO relationships.")
 
 
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--reset", action="store_true", help="Delete all data before loading")
+    args = parser.parse_args()
+
+    if not URI or not PASSWORD:
+        print("COGNODB_URI and COGNODB_PASSWORD must be set (via .env or the environment).")
+        sys.exit(1)
+
+    driver = GraphDatabase.driver(URI, auth=(USER, PASSWORD))
+    try:
+        driver.verify_connectivity()
+    except Exception as exc:  # noqa: BLE001
+        print(f"Could not connect to CognoDB at {URI}: {exc}")
+        sys.exit(1)
+
+    with driver.session(database=DATABASE) as session:
+        if args.reset:
+            reset(session)
+        create_constraints(session)
+        load_skills(session)
+        load_courses(session)
+        load_roles(session)
+        load_skill_relationships(session)
+
+    driver.close()
+    print("Seed complete.")
+
+
 if __name__ == "__main__":
     main()
