@@ -49,6 +49,39 @@ export default function CourseDetailPage() {
           </a>
         )}
 
+        <div className="mt-6 grid gap-6 sm:grid-cols-2">
+          <div>
+            <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Teaches</h3>
+            <div className="flex flex-wrap gap-2">
+              {course.teaches.map((s) => (
+                <span key={s} className="rounded-full bg-indigo-50 px-3 py-1.5 text-sm font-medium text-indigo-700">
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+          {course.requires_skills.length > 0 && (
+            <div>
+              <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Assumes you already know</h3>
+              <div className="flex flex-wrap gap-2">
+                {course.requires_skills.map((s) => (
+                  <span key={s.skill_id} className="rounded-full bg-slate-100 px-3 py-1.5 text-sm font-medium text-slate-600">
+                    {s.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+        <h2 className="font-display text-xl font-semibold text-slate-900">Prerequisite chain</h2>
+        <p className="mt-1 text-sm text-slate-500">
+          Every course you'd need to complete first, found by walking the course graph outward — however many hops
+          deep that chain happens to go.
+        </p>
+
         {chainLoading && <LoadingState label="Walking the prerequisite graph…" />}
         {!chainLoading && (!chain || chain.length === 0) && (
           <div className="mt-4">
