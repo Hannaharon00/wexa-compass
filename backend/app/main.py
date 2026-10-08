@@ -62,3 +62,25 @@ app.include_router(courses.router)
 app.include_router(roles.router)
 app.include_router(paths.router)
 
+# --- Serve the built React frontend (single-service deploy) ---------------
+FRONTEND_DIST = Path(__file__).resolve().parents[2] / "frontend" / "dist"
+
+if FRONTEND_DIST.exists():
+    app.mount("/assets", StaticFiles(directory=FRONTEND_DIST / "assets"), name="assets")
+
+    @app.get("/{full_path:path}")
+    async def spa_fallback(full_path: str):
+        """Any non-API route serves the SPA shell so client-side routing
+        (e.g. /roles/backend-engineer) works on a hard refresh.
+
+        index.html is served with no-cache: it's tiny, referenced by
+        every route, and its whole job is to point at the *current*
+        hashed asset bundle. Letting a browser cache it stale is what
+        makes a redeploy look like it "didn't take" -- the hashed files
+        under /assets are what should be cached hard, since their
+        filename itself changes whenever their content does.
+        """
+        candidate = FRONTEND_DIST / full_path
+        if full_path and candidate.is_file():
+            return FileResponse(candidate)
+        return FileResponse(FRONTEND_DIST / "index.html", headers={"Cache-Control": "no-cache"})

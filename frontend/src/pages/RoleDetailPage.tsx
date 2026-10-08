@@ -165,3 +165,36 @@ export default function RoleDetailPage() {
   );
 }
 
+function SkillGroup({
+  label,
+  skills,
+  knownSet,
+}: {
+  label: string;
+  skills: RoleDetail["required_skills"];
+  knownSet: Set<string>;
+}) {
+  if (skills.length === 0) return null;
+  return (
+    <div>
+      <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</h3>
+      <div className="flex flex-wrap gap-2">
+        {skills.map((skill) => {
+          const style = categoryStyle(skill.category);
+          const known = knownSet.has(skill.skill_id);
+          return (
+            <span
+              key={skill.skill_id}
+              className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium ${style.bg} ${style.text} ${style.border} ${
+                known ? "ring-2 ring-emerald-400" : ""
+              }`}
+            >
+              {known && <span className="text-emerald-600">✓</span>}
+              {skill.name}
+            </span>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
