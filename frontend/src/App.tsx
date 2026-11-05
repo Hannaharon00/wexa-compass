@@ -20,3 +20,22 @@ function NotFoundPage() {
   );
 }
 
+export default function App() {
+  return (
+    <KnownSkillsProvider>
+      <BrowserRouter>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/roles" element={<RolesPage />} />
+            <Route path="/roles/:roleId" element={<RoleDetailPage />} />
+            <Route path="/courses" element={<CoursesPage />} />
+            <Route path="/courses/:courseId" element={<CourseDetailPage />} />
+            <Route path="/skills" element={<SkillsPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Layout>
+      </BrowserRouter>
+    </KnownSkillsProvider>
+  );
+}
