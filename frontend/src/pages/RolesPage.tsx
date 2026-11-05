@@ -64,3 +64,13 @@ export default function RolesPage() {
         <EmptyState title="No roles yet" description="Run the seed script to load roles into CognoDB." />
       )}
 
+      {!loading && sortedRoles.length > 0 && (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {sortedRoles.map((role) => (
+            <RoleCard key={role.role_id} role={role} match={matchByRole.get(role.role_id)} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
